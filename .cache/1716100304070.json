@@ -1,0 +1,1 @@
+{"date":"2024-05-19T06:31:24.637Z","courseId":"17","assignment":"AP-Spring03-CA6","trace":{"content":"#include \"Major.hpp\"\n\nMajor::Major(string id, string name) : University(id, name) {}","filename":"/Users/mahdis/Desktop/AP/AP6/src/Major.cpp","identifier":"Save Document","languageId":"cpp","version":206,"lineCount":3},"failed":true}

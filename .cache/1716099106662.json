@@ -1,0 +1,1 @@
+{"date":"2024-05-19T06:11:45.421Z","courseId":"17","assignment":"AP-Spring03-CA6","trace":{"content":"#ifndef MAJOR_INCLUDE\n#define MAJOR_INCLUDE\n\n#include \"Global.hpp\"\n\nclass Major {\n    \n};\n\n#endif","filename":"/Users/mahdis/Desktop/AP/AP6/include/Major.hpp","identifier":"Save Document","languageId":"cpp","version":113,"lineCount":10},"failed":false}

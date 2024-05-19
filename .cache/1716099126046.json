@@ -1,0 +1,1 @@
+{"date":"2024-05-19T06:11:58.693Z","courseId":"17","assignment":"AP-Spring03-CA6","trace":{"version":127,"content":"#ifndef MAJOR_INCLUDE\n#define MAJOR_INCLUDE\n\n#include \"Global.hpp\"\n\nclass Major {\npublic:\n\nprote\n\n};\n\n#endif","filename":"/Users/mahdis/Desktop/AP/AP6/include/Major.hpp","identifier":"Text Change","lineCount":13,"languageId":"cpp"},"failed":true}

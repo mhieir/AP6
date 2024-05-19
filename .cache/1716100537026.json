@@ -1,0 +1,1 @@
+{"date":"2024-05-19T06:35:35.495Z","courseId":"17","assignment":"AP-Spring03-CA6","trace":{"version":83,"content":"#include \"Course.hpp\"\n\nCourse(string cid, string name, int credit, int prerequisite, string majors_id_string);","filename":"/Users/mahdis/Desktop/AP/AP6/src/Course.cpp","identifier":"Text Change","lineCount":3,"languageId":"cpp"},"failed":false}
