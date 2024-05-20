@@ -60,6 +60,9 @@
     "iostream": "cpp",
     "typeinfo": "cpp",
     "iosfwd": "cpp",
-    "string": "cpp"
+    "string": "cpp",
+    "new": "cpp",
+    "vector": "cpp",
+    "stdexcept": "cpp"
   }
 }

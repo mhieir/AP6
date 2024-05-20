@@ -2,9 +2,9 @@
 #define PEOPLE_INCLUDE
 
 #include "Global.hpp"
-#include "University.hpp"
+#include "Entity.hpp"
 
-class People : public University {
+class People : public Entity {
 public:
     People(string id, string name, string major_id, string password);
     ~People() {};

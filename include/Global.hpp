@@ -5,7 +5,50 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
 
 using namespace std;
+
+const string NULL_STRING = "";
+const string UT_ACCOUNT = "UT_account";
+const string UT_ACCOUNT_PASSWORD = "UT_account";
+const string OK = "OK";
+const string EMPTY = "Empty";
+const string QUESTION_MARK = "?";
+const string GET = "GET";
+const string POST = "POST";
+const string DELETE = "DELETE";
+const string PUT = "PUT";
+const string LOGIN = "logout";
+const string LOGOUT = "Empty";
+const string ID = "id";
+const string PASSWORD = "password";
+const string COURSES = "courses";
+const string LITTLE_POST = "post";
+const string TITLE = "title";
+const string MESSAGE = "message";
+const string PERSONAL_PAGE = "personal_page";
+const string POST_ID = "post_id";
+const string CONNECT = "connect";
+const string NOTIFICATION = "notification";
+const string COURSE_OFFER = "course_offer";
+const string COURSE_ID = "course_id";
+const string PROFESSOR_ID = "professor_id";
+const string CAPACITY = "capacity";
+const string TIME = "time";
+const string EXAM_DATE = "exam_date";
+const string CLASS_NUMBER = "class_number";
+const string MY_COURSES = "my_courses";
+const string NOT_FOUND = "Not Found";
+const string BAD_REQUEST = "Bad Request";
+const string PERMISSION_DENIED = "Permission denied";
+const char COMMA = ',';
+const char SLASH = '/';
+const char COLON = ':';
+const char SEMI_COLON = ';';
+const char DASH = '-';
+const int MAXCHAR = 500;
+const int LOGGED_OUT = -1;
+const int ZERO = 0;
 
 #endif

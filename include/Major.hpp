@@ -2,9 +2,9 @@
 #define MAJOR_INCLUDE
 
 #include "Global.hpp"
-#include "University.hpp"
+#include "Entity.hpp"
 
-class Major : public University {
+class Major : public Entity {
 public:
     Major(string id, string name);
     ~Major(){};
