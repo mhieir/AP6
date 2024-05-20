@@ -7,6 +7,7 @@ vector<string> read_csv(const char path[256]);
 void signInSplitting(string &result, vector<string> &splitted);
 void notSignInSplitting(string &result, char character);
 vector<string> splitByInputSign(string inputString, char sign);
-bool invalidInput(string input_word);
+void catchError(runtime_error& ex);
+void checkQuestionMark();
 
 #endif

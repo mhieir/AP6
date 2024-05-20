@@ -63,6 +63,9 @@
     "string": "cpp",
     "new": "cpp",
     "vector": "cpp",
-    "stdexcept": "cpp"
+    "stdexcept": "cpp",
+    "bitset": "cpp",
+    "locale": "cpp",
+    "filesystem": "cpp"
   }
 }

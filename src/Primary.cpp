@@ -27,14 +27,11 @@ vector<string> splitByInputSign(string inputString, char sign)
 {
     string result = NULL_STRING;
     vector<string> splitted;
-    for (auto &character : inputString)
-    {
-        if (character == sign)
-        {
+    for (auto &character : inputString){
+        if (character == sign) {
             signInSplitting(result, splitted);
         }
-        else
-        {
+        else {
             notSignInSplitting(result, character);
         }
     }
@@ -42,9 +39,20 @@ vector<string> splitByInputSign(string inputString, char sign)
     return splitted;
 }
 
-bool invalidInput(string input_word) {
-    if(input_word != GET and input_word != POST and input_word != PUT and input_word != DELETE) {
-        return false;
+void catchError(runtime_error& ex) {
+    cerr << ex.what() << endl;
+    string to_be_ignored;
+    getline(cin, to_be_ignored);
+}
+
+void checkQuestionMark() {
+	try {
+        string new_input;
+        cin >> new_input;
+        if(new_input != QUESTION_MARK) {
+            throw runtime_error(BAD_REQUEST);
+        }
+    } catch(runtime_error& ex) {
+        catchError(ex);
     }
-    return true;
 }

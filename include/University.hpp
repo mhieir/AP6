@@ -21,7 +21,16 @@ private:
     vector<Course*> courses;
 
     People* user;
+    void checkPassword(People* person, string password);
+    void checkValidInfo(string id, string password);
+    void loginModeInput();
+    void handleLoginMode();
     void handleInput();
+    void checkNotInLoginMode();
+    void handleGetRequest() {};
+    void handlePostRequest();
+    void handlePutRequest() {};
+    void handleDeleteRequest() {};
     void makeMajorString(vector<string> major_string);
     void makeStudentString(vector<string> student_string);
     void makeCourseString(vector<string> course_string);
