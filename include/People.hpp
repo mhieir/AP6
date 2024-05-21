@@ -10,8 +10,10 @@ public:
     ~People() {};
     string getMajorId() {return major_id;}
     string getPassword() {return password;}
+    void addConnection(string new_id) {connections.push_back(new_id);}
 protected:
     string major_id, password;
+    vector<string> connections;
 private:
 };
 

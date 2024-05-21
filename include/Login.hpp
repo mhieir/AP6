@@ -8,13 +8,13 @@ class Login {
 public:
     Login(vector<string> input_line);
     ~Login() {};
-    void run(People* &user, vector<People*> &people);
-    void checkQuestionMark(People* &user, vector<People*> &people);
-    void checkNotInLoginMode(People* &user, vector<People*> &people);
-    void loginModeInput(People* &user, vector<People*> &people);
-    void findPeopleById(string id, People* &user, vector<People*> &people);
-    bool checkValidId(string id, People* &user, vector<People*> &people);
-    bool checkValidPassword(string id, string password, People* &user, vector<People*> &people);
+    void run();
+    void checkQuestionMark();
+    void checkNotInLoginMode();
+    void loginModeInput();
+    void findPeopleById(string id);
+    bool checkValidId(string id);
+    bool checkValidPassword(string id, string password);
 protected:
 private:
     vector<string> input_line;

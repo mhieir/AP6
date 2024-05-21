@@ -1,9 +1,7 @@
-#include "Login.hpp"
+#include "University.hpp"
 #include "Primary.hpp"
 
-Login::Login(vector<string> input_line) : input_line(input_line) {}
-
-bool Login::checkValidPassword(string id, string password, People* &user, vector<People*> &people) {
+bool University::checkValidPassword(string id, string password) {
     for(int i = 0; i < people.size(); i++) {
         if(people[i]->getId() == id and people[i]->getPassword() == password) {
             return true;
@@ -12,7 +10,7 @@ bool Login::checkValidPassword(string id, string password, People* &user, vector
     return false;
 }
 
-bool Login::checkValidId(string id, People* &user, vector<People*> &people) {
+bool University::checkValidId(string id) {
     for(int i = 0; i < people.size(); i++) {
         if(people[i]->getId() == id) {
             return true;
@@ -21,7 +19,7 @@ bool Login::checkValidId(string id, People* &user, vector<People*> &people) {
     return false;
 }
 
-void Login::findPeopleById(string id, People* &user, vector<People*> &people) {
+void University::findPeopleById(string id) {
     for(int i = 0; i < people.size(); i++) {
         if(people[i]->getId() == id) {
             user = people[i];
@@ -29,7 +27,7 @@ void Login::findPeopleById(string id, People* &user, vector<People*> &people) {
     }
 }
 
-void Login::loginModeInput(People* &user, vector<People*> &people) {
+void University::loginModeInput() {
     string id = NULL_STRING, password = NULL_STRING;
     for(int i = 3; i < 7; i += 2) {
         string input_type = input_line[i], value = input_line[i + 1];
@@ -41,14 +39,14 @@ void Login::loginModeInput(People* &user, vector<People*> &people) {
         }
     }
     try {
-        if(!checkValidId(id, user, people)) {
+        if(!checkValidId(id)) {
             throw runtime_error(NOT_FOUND);
         }
-        else if(!checkValidPassword(id, password, user, people)) {
+        else if(!checkValidPassword(id, password)) {
             throw runtime_error(PERMISSION_DENIED);
         }
         else {
-            findPeopleById(id, user, people);
+            findPeopleById(id);
             throw runtime_error(OK);
         }
     } catch(runtime_error& ex) {
@@ -56,10 +54,10 @@ void Login::loginModeInput(People* &user, vector<People*> &people) {
     }
 }
 
-void Login::checkNotInLoginMode(People* &user, vector<People*> &people) {
+void University::checkNotInLoginMode() {
     try {
         if(user == nullptr) {
-            loginModeInput(user, people);
+            loginModeInput();
         }
         else {
             throw runtime_error(PERMISSION_DENIED);
@@ -69,10 +67,10 @@ void Login::checkNotInLoginMode(People* &user, vector<People*> &people) {
     }
 }
 
-void Login::checkQuestionMark(People* &user, vector<People*> &people) {
+void University::checkQuestionMark() {
     try {
         if(input_line[2] == QUESTION_MARK) {
-            checkNotInLoginMode(user, people);
+            checkNotInLoginMode();
         }
         else {
             throw runtime_error(BAD_REQUEST);
@@ -82,10 +80,10 @@ void Login::checkQuestionMark(People* &user, vector<People*> &people) {
     }
 }
 
-void Login::run(People* &user, vector<People*> &people) {
+void University::runLogin() {
     try {
         if(input_line.size() == LOGIN_MODE_SIZE) {
-            checkQuestionMark(user, people);
+            checkQuestionMark();
         }
         else {
             throw runtime_error(BAD_REQUEST);

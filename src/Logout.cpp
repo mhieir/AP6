@@ -1,9 +1,7 @@
-#include "Logout.hpp"
+#include "University.hpp"
 #include "Primary.hpp"
 
-Logout::Logout(vector<string> input_line, People* user) : user(user), input_line(input_line) {}
-
-void Logout::checkNotInLogoutMode() {
+void University::checkNotInLogoutMode() {
     try {
         if(user != nullptr) {
             user = nullptr;
@@ -17,7 +15,7 @@ void Logout::checkNotInLogoutMode() {
     }
 }
 
-void Logout::checkQuestionMarkLogout() {
+void University::checkQuestionMarkLogout() {
     try {
         if(input_line[2] == QUESTION_MARK) {
             checkNotInLogoutMode();
@@ -30,7 +28,7 @@ void Logout::checkQuestionMarkLogout() {
     }
 }
 
-void Logout::checkInputSizeLogout() {
+void University::runLogout() {
     try {
         if(input_line.size() == LOGOUT_MODE_SIZE) {
             checkQuestionMarkLogout();
