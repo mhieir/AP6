@@ -174,7 +174,9 @@ void University::handleInput() {
     }
 }
 
-void University::checkInputSize() {
+void University::checkInputSize(string input_string) {
+    cout << input_string.size() << endl;
+    input_line = splitByInputSign(input_string, SPACE);
     try {
         if(input_line.size() == LOGIN_MODE_SIZE) {
             handleInput();
@@ -187,25 +189,14 @@ void University::checkInputSize() {
     }
 }
 
-void University::getInput() {
-    string input_string;
-   
-    if(cin.peek() == '\n') cin.clear();
-
-    getline(cin, input_string);
-  
-  //  getline(cin, input_string);
-    //
-    // if (getline(cin, input_string)) {
-    //     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    // }
-	input_line = splitByInputSign(input_string, SPACE);
-}
 
 void University::run() {
-    while(true) {
-        getInput();
-        checkInputSize();
-        if(user != nullptr) cout << user->getId() << endl;
+    string line;
+    while (getline(cin, line)) {
+        try {
+        checkInputSize(line);
+        } catch (exception &e) {
+        cout << BAD_REQUEST << endl;
+        }
     }
 }

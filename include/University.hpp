@@ -25,11 +25,7 @@ private:
     bool checkValidId(string id);
     bool checkValidPassword(string id, string password);
     void checkQuestionMarkLogin();
-    void getInput();
-    void checkInputSize();
-    // void handleLogoutMode();
-    // void checkNotInLogoutMode();
-    // void logoutModeInput();
+    void checkInputSize(string input_string);
     void loginModeInput();
     void handleInput();
     void checkNotInLoginMode();
