@@ -19,12 +19,18 @@ private:
     vector<Major*> majors;
     vector<People*> people;
     vector<Course*> courses;
-
+    vector<string> input_line;
     People* user;
-    void checkPassword(People* person, string password);
-    void checkValidInfo(string id, string password);
+
+    bool checkValidId(string id);
+    bool checkValidPassword(string id, string password);
+    void checkQuestionMarkLogin();
+    void getInput();
+    void checkInputSize();
+    // void handleLogoutMode();
+    // void checkNotInLogoutMode();
+    // void logoutModeInput();
     void loginModeInput();
-    void handleLoginMode();
     void handleInput();
     void checkNotInLoginMode();
     void handleGetRequest() {};

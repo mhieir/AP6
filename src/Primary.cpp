@@ -56,3 +56,12 @@ void checkQuestionMark() {
         catchError(ex);
     }
 }
+
+void okMode() {
+	try {
+        throw runtime_error(OK);
+    } catch(runtime_error& ex) {
+        catchError(ex);
+    }
+}
+

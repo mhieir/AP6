@@ -46,9 +46,11 @@ const char COMMA = ',';
 const char SLASH = '/';
 const char COLON = ':';
 const char SEMI_COLON = ';';
+const char SPACE = ' ';
 const char DASH = '-';
 const int MAX_CHAR = 500;
 const int LOGGED_OUT = -1;
 const int ZERO = 0;
+const int LOGIN_MODE_SIZE = 7;
 
 #endif

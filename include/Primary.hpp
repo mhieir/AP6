@@ -9,5 +9,6 @@ void notSignInSplitting(string &result, char character);
 vector<string> splitByInputSign(string inputString, char sign);
 void catchError(runtime_error& ex);
 void checkQuestionMark();
+void okMode();
 
 #endif
