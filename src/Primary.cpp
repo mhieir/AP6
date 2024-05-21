@@ -41,8 +41,6 @@ vector<string> splitByInputSign(string inputString, char sign)
 
 void catchError(runtime_error& ex) {
     cerr << ex.what() << endl;
-    string to_be_ignored;
-    getline(cin, to_be_ignored);
 }
 
 void checkQuestionMark() {

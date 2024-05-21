@@ -52,5 +52,6 @@ const int MAX_CHAR = 500;
 const int LOGGED_OUT = -1;
 const int ZERO = 0;
 const int LOGIN_MODE_SIZE = 7;
+const int LOGOUT_MODE_SIZE = 3;
 
 #endif

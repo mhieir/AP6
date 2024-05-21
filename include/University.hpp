@@ -8,6 +8,8 @@
 #include "People.hpp"
 #include "Student.hpp"
 #include "Professor.hpp"
+#include "Login.hpp"
+#include "Logout.hpp"
 
 class University {
 public:
@@ -21,18 +23,18 @@ private:
     vector<Course*> courses;
     vector<string> input_line;
     People* user;
+    Login* login;
+    Logout* logout;
 
-    bool checkValidId(string id);
-    bool checkValidPassword(string id, string password);
-    void checkQuestionMarkLogin();
+    void checkNotInLogoutMode();
+    void checkQuestionMarkLogout();
     void checkInputSize(string input_string);
-    void loginModeInput();
     void handleInput();
-    void checkNotInLoginMode();
     void handleGetRequest() {};
     void handlePostRequest();
     void handlePutRequest() {};
     void handleDeleteRequest() {};
+    void checkInputSizeLogout();
     void makeMajorString(vector<string> major_string);
     void makeStudentString(vector<string> student_string);
     void makeCourseString(vector<string> course_string);

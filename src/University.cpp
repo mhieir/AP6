@@ -35,57 +35,16 @@ University::University(char *argv[]) {
     makeCourseString(read_csv(argv[3]));
     makeProfessorString(read_csv(argv[4]));
     user = nullptr;
+    login = nullptr;
 }
 
-bool University::checkValidPassword(string id, string password) {
-    for(int i = 0; i < people.size(); i++) {
-        if(people[i]->getId() == id and people[i]->getPassword() == password) {
-            return true;
-        }
-    }
-    return false;
-}
 
-bool University::checkValidId(string id) {
-    for(int i = 0; i < people.size(); i++) {
-        if(people[i]->getId() == id) {
-            return true;
-        }
-    }
-    return false;
-}
-
-void University::loginModeInput() {
-    string id = NULL_STRING, password = NULL_STRING;
-    for(int i = 3; i < 7; i += 2) {
-        string input_type = input_line[i], value = input_line[i + 1];
-        if(input_type == ID) {
-            id = value;
-        }
-        else if(input_type == PASSWORD) {
-            password = value;
-        }
-    }
+void University::checkNotInLogoutMode() {
     try {
-        if(!checkValidId(id)) {
-            throw runtime_error(NOT_FOUND);
-        }
-        else if(!checkValidPassword(id, password)) {
-            throw runtime_error(PERMISSION_DENIED);
-        }
-        else {
+        if(user != nullptr) {
+            user = nullptr;
             throw runtime_error(OK);
         }
-    } catch(runtime_error& ex) {
-        catchError(ex);
-    }
-}
-
-void University::checkNotInLoginMode() {
-    try {
-        if(user == nullptr) {
-            loginModeInput();
-        }
         else {
             throw runtime_error(PERMISSION_DENIED);
         }
@@ -94,29 +53,23 @@ void University::checkNotInLoginMode() {
     }
 }
 
-// void University::checkNotInLogoutMode() {
-//     try {
-//         if(user != nullptr) {
-//             cout << 2;
-//         }
-//         else {
-//             throw runtime_error(PERMISSION_DENIED);
-//         }
-//     } catch(runtime_error& ex) {
-//         catchError(ex);
-//     }
-// }
-
-// void University::handleLogoutMode() {
-//     checkNotInLogoutMode();
-//     checkQuestionMark();
-//     okMode();
-// }
-
-void University::checkQuestionMarkLogin() {
+void University::checkQuestionMarkLogout() {
     try {
         if(input_line[2] == QUESTION_MARK) {
-            checkNotInLoginMode();
+            checkNotInLogoutMode();
+        }
+        else {
+            throw runtime_error(BAD_REQUEST);
+        }
+    } catch(runtime_error& ex) {
+        catchError(ex);
+    }
+}
+
+void University::checkInputSizeLogout() {
+    try {
+        if(input_line.size() == LOGOUT_MODE_SIZE) {
+            checkQuestionMarkLogout();
         }
         else {
             throw runtime_error(BAD_REQUEST);
@@ -132,11 +85,12 @@ void University::handlePostRequest() {
             checkQuestionMark();
         }
         else if(input_line[1] == LOGIN) {
-            checkQuestionMarkLogin();
+            login = new Login(input_line);
+            login->run(user, people);
         }
         else if(input_line[1] == LOGOUT) {
-            checkQuestionMark();
-            // handleLogoutMode();
+            logout = new Logout(input_line, user);
+            logout->checkInputSizeLogout();
         }
         else if(input_line[1] == CONNECT) {
             checkQuestionMark();
@@ -175,10 +129,9 @@ void University::handleInput() {
 }
 
 void University::checkInputSize(string input_string) {
-    cout << input_string.size() << endl;
     input_line = splitByInputSign(input_string, SPACE);
     try {
-        if(input_line.size() == LOGIN_MODE_SIZE) {
+        if(input_line.size() > 0) {
             handleInput();
         }
         else {
@@ -189,12 +142,11 @@ void University::checkInputSize(string input_string) {
     }
 }
 
-
 void University::run() {
     string line;
     while (getline(cin, line)) {
         try {
-        checkInputSize(line);
+            checkInputSize(line);
         } catch (exception &e) {
         cout << BAD_REQUEST << endl;
         }
