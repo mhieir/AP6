@@ -1,0 +1,1 @@
+{"date":"2024-05-22T06:41:19.204Z","courseId":"17","assignment":"AP-Spring03-CA6","trace":{"version":3,"content":"#include \"Post.hpp\"\n\nPost::Post(string title, string message) : message(message), title(title) {\n    id = \n}","filename":"/Users/mahdis/Desktop/AP/AP6/src/Post.cpp","identifier":"Text Change","lineCount":5,"languageId":"cpp"},"failed":false}

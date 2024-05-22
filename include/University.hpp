@@ -22,6 +22,14 @@ private:
     vector<string> input_line;
     People* user;
 
+    string makeText(int start, int end);
+    void makeMessageText();
+    void checkQuestionMarkSharePost();
+    void runSharePost();
+    bool isFloatId(string id);
+    bool checkLogin();
+    void checkLoginConnect();
+    void checkConnectionValidInput();
     void checkQuestionMarkConnect();
     bool checkValidPassword(string id, string password);
     bool checkValidId(string id);
@@ -40,6 +48,7 @@ private:
     void handlePostRequest();
     void handlePutRequest() {};
     void handleDeleteRequest() {};
+    bool wasConnected(string id);
     void makeMajorString(vector<string> major_string);
     void makeStudentString(vector<string> student_string);
     void makeCourseString(vector<string> course_string);

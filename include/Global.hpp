@@ -43,15 +43,19 @@ const string NOT_FOUND = "Not Found";
 const string BAD_REQUEST = "Bad Request";
 const string PERMISSION_DENIED = "Permission denied";
 const char COMMA = ',';
+const char DOT = '.';
 const char SLASH = '/';
 const char COLON = ':';
 const char SEMI_COLON = ';';
 const char SPACE = ' ';
 const char DASH = '-';
+const char QUOTION = '\"';
 const int MAX_CHAR = 500;
 const int LOGGED_OUT = -1;
 const int ZERO = 0;
 const int LOGIN_MODE_SIZE = 7;
 const int LOGOUT_MODE_SIZE = 3;
+const int CONNECT_MODE_SIZE = 5;
+const int SHARE_POST_MODE_SIZE = 7;
 
 #endif

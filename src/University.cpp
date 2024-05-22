@@ -37,10 +37,37 @@ University::University(char *argv[]) {
     user = nullptr;
 }
 
+bool University::checkLogin() {
+    if(user != nullptr) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+bool University::isFloatId(string id) {
+    for(char c : id) {
+        if(c == DOT) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool University::checkValidId(string id) {
+    for(int i = 0; i < people.size(); i++) {
+        if(people[i]->getId() == id) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void University::handlePostRequest() {
     try {
         if(input_line[1] == LITTLE_POST) {
-            checkQuestionMark();
+            runSharePost();
         }
         else if(input_line[1] == LOGIN) {
             runLogin();

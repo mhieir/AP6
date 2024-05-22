@@ -10,15 +10,6 @@ bool University::checkValidPassword(string id, string password) {
     return false;
 }
 
-bool University::checkValidId(string id) {
-    for(int i = 0; i < people.size(); i++) {
-        if(people[i]->getId() == id) {
-            return true;
-        }
-    }
-    return false;
-}
-
 void University::findPeopleById(string id) {
     for(int i = 0; i < people.size(); i++) {
         if(people[i]->getId() == id) {
