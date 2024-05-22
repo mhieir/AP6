@@ -25,3 +25,12 @@ void People::removePost(int post_id) {
         }
     }
 }
+
+bool People::isInPost(int post_id) {
+    for(int i = 0; i < (int) posts.size(); i++) {
+        if(posts[i]->getId() == post_id) {
+            return true;
+        }
+    }
+    return false;
+}

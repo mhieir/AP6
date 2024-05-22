@@ -1,40 +1,41 @@
 #include "University.hpp"
 #include "Primary.hpp"
 
-void University::makeMajorString(vector<string> major_string) {
-    for(int i = 1; i < major_string.size(); i++) {
-        vector<string> splitted = splitByInputSign(major_string[i], COMMA);
-        majors.push_back(new Major(splitted[0], splitted[1]));
-    }
-}
-
-void University::makeStudentString(vector<string> student_string) {
-    for(int i = 1; i < student_string.size(); i++) {
-        vector<string> splitted = splitByInputSign(student_string[i], COMMA);
-        people.push_back(new Student(splitted[0], splitted[1], splitted[2], stoi(splitted[3]), splitted[4]));
-    }
-}
-
-void University::makeCourseString(vector<string> course_string) {
-    for(int i = 1; i < course_string.size(); i++) {
-        vector<string> splitted = splitByInputSign(course_string[i], COMMA);
-        courses.push_back(new Course(splitted[0], splitted[1], stoi(splitted[2]), stoi(splitted[3]), splitByInputSign(splitted[4], SEMI_COLON)));
-    }
-}
-
-void University::makeProfessorString(vector<string> professor_string) {
-    for(int i = 1; i < professor_string.size(); i++) {
-        vector<string> splitted = splitByInputSign(professor_string[i], COMMA);
-        people.push_back(new Professor(splitted[0], splitted[1], splitted[2], splitted[3], splitted[4]));
-    }
-}
-
-University::University(char *argv[]) {
-    makeMajorString(read_csv(argv[1]));
-    makeStudentString(read_csv(argv[2]));
-    makeCourseString(read_csv(argv[3]));
-    makeProfessorString(read_csv(argv[4]));
+University::University() {
     user = nullptr;
+}
+
+void University::addMajor(string id, string name) {
+    majors.push_back(new Major(id, name));
+}
+
+void University::addStudent(string id, string name, string major_id, int semester, string password) {
+    people.push_back(new Student(id, name, major_id, semester, password));
+}
+
+void University::addCourse(string id, string name, int credit, int prerequisite, vector<string> majors_id) {
+    courses.push_back(new Course(id, name, credit, prerequisite, majors_id));
+}
+
+void University::addProfessor(string id, string name, string major_id, string string_position, string password) {
+    people.push_back(new Professor(id, name, major_id, string_position, password));
+}
+
+bool University::checkValidPassword(string id, string password) {
+    for(int i = 0; i < people.size(); i++) {
+        if(people[i]->getId() == id and people[i]->getPassword() == password) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+bool University::checkValidPostNumber(string post_id) {
+    if(!isNumber(post_id)) {
+        return false;
+    }
+    return user->isInPost(stoi(post_id));
 }
 
 bool University::checkLogin() {
@@ -65,53 +66,80 @@ bool University::checkValidId(string id) {
 }
 
 void University::handlePostRequest() {
-    try {
-        if(input_line[1] == LITTLE_POST) {
-            runSharePost();
-        }
-        else if(input_line[1] == LOGIN) {
-            runLogin();
-        }
-        else if(input_line[1] == LOGOUT) {
-            runLogout();
-        }
-        else if(input_line[1] == CONNECT) {
-            runConnect();
-        }
-        else if(input_line[1] == COURSE_OFFER) {
-            checkQuestionMark();
-        }
-        else {
-            throw runtime_error(NOT_FOUND);
-        }
-    } catch(runtime_error& ex) {
-        catchError(ex);
+    if(input_line[1] == LITTLE_POST) {
+        runSharePost();
+    }
+    else if(input_line[1] == LOGIN) {
+        runLogin();
+    }
+    else if(input_line[1] == LOGOUT) {
+        runLogout();
+    }
+    else if(input_line[1] == CONNECT) {
+        runConnect();
+    }
+    else if(input_line[1] == COURSE_OFFER) {
+        
+    }
+    else {
+        throw runtime_error(NOT_FOUND);
+    }
+
+}
+
+void University::handleGetRequest() {
+    if(input_line[1] == MY_COURSES) {
+        
+    }
+    else if(input_line[1] == NOTIFICATION) {
+        // runLogin();
+    }
+    else if(input_line[1] == LITTLE_POST) {
+        // runLogin();
+    }
+    else if(input_line[1] == PERSONAL_PAGE) {
+        runPersonalPage();
+    }
+    else if(input_line[1] == COURSES) {
+
+    }
+    else {
+        throw runtime_error(NOT_FOUND);
+    }
+
+}
+
+void University::handleDeleteRequest() {
+    if(input_line[1] == LITTLE_POST) {
+        runRemovePost();
+    }
+    else if(input_line[1] == MY_COURSES) {
+        // runLogin();
+    }
+    else {
+        throw runtime_error(NOT_FOUND);
     }
 }
 
 void University::handleInput() {
-    try {
-        if(input_line[0] == GET) {
-            handleGetRequest();
-        }
-        else if(input_line[0] == POST) {
-            handlePostRequest();
-        }
-        else if(input_line[0] == PUT) {
-            handlePutRequest();
-        }
-        else if(input_line[0] == DELETE) {
-            handleDeleteRequest();
-        }
-        else {
-            throw runtime_error(BAD_REQUEST);
-        }
-    } catch(runtime_error& ex) {
-        catchError(ex);
+    if(input_line[0] == GET) {
+        handleGetRequest();
+    }
+    else if(input_line[0] == POST) {
+        handlePostRequest();
+    }
+    else if(input_line[0] == PUT) {
+        handlePutRequest();
+    }
+    else if(input_line[0] == DELETE) {
+        handleDeleteRequest();
+    }
+    else {
+        throw runtime_error(BAD_REQUEST);
     }
 }
 
-void University::checkInputSize(string input_string) {
+void University::run(string input_string) {
     input_line = splitByInputSign(input_string, SPACE);
     try {
         if(input_line.size() > 0) {
@@ -120,18 +148,7 @@ void University::checkInputSize(string input_string) {
         else {
             throw runtime_error(BAD_REQUEST);
         }
-    } catch(runtime_error& ex) {
-        catchError(ex);
-    }
-}
-
-void University::run() {
-    string line;
-    while (getline(cin, line)) {
-        try {
-            checkInputSize(line);
-        } catch (exception &e) {
-        cout << BAD_REQUEST << endl;
-        }
+    } catch (runtime_error &e) {
+        catchError(e);
     }
 }

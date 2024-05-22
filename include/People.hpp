@@ -13,8 +13,10 @@ public:
     string getPassword() {return password;}
     void addConnection(string new_id) {connections.push_back(new_id);}
     bool inConnection(string new_id);
+    bool isInPost(int post_id);
     void addPost(string title, string message);
     void removePost(int post_id);
+    virtual void personalPage() = 0;
 protected:
     string major_id, password;
     vector<string> connections;

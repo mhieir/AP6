@@ -9,6 +9,7 @@ public:
     Student(string id, string name, string major_id, int semester, string password);
     ~Student() {};
     int getSemester() {return semester;}
+    void personalPage();
 protected:
     int semester;
 private:

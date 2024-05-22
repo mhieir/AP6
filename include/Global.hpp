@@ -57,5 +57,6 @@ const int LOGIN_MODE_SIZE = 7;
 const int LOGOUT_MODE_SIZE = 3;
 const int CONNECT_MODE_SIZE = 5;
 const int SHARE_POST_MODE_SIZE = 7;
+const int REMOVE_POST_MODE_SIZE = 5;
 
 #endif

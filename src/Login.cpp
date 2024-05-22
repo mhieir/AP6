@@ -1,15 +1,6 @@
 #include "University.hpp"
 #include "Primary.hpp"
 
-bool University::checkValidPassword(string id, string password) {
-    for(int i = 0; i < people.size(); i++) {
-        if(people[i]->getId() == id and people[i]->getPassword() == password) {
-            return true;
-        }
-    }
-    return false;
-}
-
 void University::findPeopleById(string id) {
     for(int i = 0; i < people.size(); i++) {
         if(people[i]->getId() == id) {
@@ -45,42 +36,17 @@ void University::loginModeInput() {
     }
 }
 
-void University::checkNotInLoginMode() {
-    try {
-        if(user == nullptr) {
-            loginModeInput();
-        }
-        else {
-            throw runtime_error(PERMISSION_DENIED);
-        }
-    } catch(runtime_error& ex) {
-        catchError(ex);
-    }
-}
-
-void University::checkQuestionMark() {
-    try {
-        if(input_line[2] == QUESTION_MARK) {
-            checkNotInLoginMode();
-        }
-        else {
-            throw runtime_error(BAD_REQUEST);
-        }
-    } catch(runtime_error& ex) {
-        catchError(ex);
-    }
-}
-
 void University::runLogin() {
-    try {
-        if(input_line.size() == LOGIN_MODE_SIZE) {
-            checkQuestionMark();
-        }
-        else {
-            throw runtime_error(BAD_REQUEST);
-        }
-    } catch(runtime_error& ex) {
-        catchError(ex);
+    if(input_line.size() != LOGIN_MODE_SIZE) {
+        throw runtime_error(BAD_REQUEST);
+    }
+    else if(!isQuestionMark(input_line[2])) {
+        throw runtime_error(BAD_REQUEST);
+    }
+    else if(user != nullptr) {
+        throw runtime_error(PERMISSION_DENIED);
+    }
+    else {
+        loginModeInput();
     }
 }
-

@@ -16,6 +16,7 @@ public:
     Professor(string id, string name, string major_id, string string_position, string password);
     ~Professor() {};
     Position getPosition() {return position;}
+    void personalPage() {};
 protected:
     string string_position;
     Position position;

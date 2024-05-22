@@ -11,9 +11,13 @@
 
 class University {
 public:
-    University(char *argv[]);
+    University();
     ~University() {};
-    void run();
+    void run(string input_string);
+    void addMajor(string id, string name);
+    void addStudent(string id, string name, string major_id, int semester, string password);
+    void addProfessor(string id, string name, string major_id, string string_position, string password);
+    void addCourse(string id, string name, int credit, int prerequisite, vector<string> majors_id);
 protected:
 private:
     vector<Major*> majors;
@@ -22,37 +26,26 @@ private:
     vector<string> input_line;
     People* user;
 
-    string makeText(int start, int end);
+
     void makeMessageText();
-    void checkQuestionMarkSharePost();
     void runSharePost();
+    void runRemovePost();
     bool isFloatId(string id);
     bool checkLogin();
-    void checkLoginConnect();
-    void checkConnectionValidInput();
-    void checkQuestionMarkConnect();
     bool checkValidPassword(string id, string password);
     bool checkValidId(string id);
     void findPeopleById(string id);
     void loginModeInput();
-    void checkNotInLoginMode();
-    void checkQuestionMark();
     void runLogin();
     void runLogout();
     void runConnect();
-    void checkNotInLogoutMode();
-    void checkQuestionMarkLogout();
-    void checkInputSize(string input_string);
+    void runPersonalPage();
+    bool checkValidPostNumber(string post_id);
     void handleInput();
-    void handleGetRequest() {};
+    void handleGetRequest();
     void handlePostRequest();
     void handlePutRequest() {};
-    void handleDeleteRequest() {};
-    bool wasConnected(string id);
-    void makeMajorString(vector<string> major_string);
-    void makeStudentString(vector<string> student_string);
-    void makeCourseString(vector<string> course_string);
-    void makeProfessorString(vector<string> professor_string);
+    void handleDeleteRequest();
 };
 
 #endif
