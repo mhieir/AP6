@@ -8,6 +8,7 @@
 #include "People.hpp"
 #include "Student.hpp"
 #include "Professor.hpp"
+#include "UTAccount.hpp"
 
 class University {
 public:
@@ -25,11 +26,18 @@ private:
     vector<Course*> courses;
     vector<string> input_line;
     People* user;
+    int course_offer_id;
 
-
+    bool isPresentByProfessor(string professor_id, string course_id);
+    int findCourseIndexById(string id);
+    int findPeopleIndexById(string id);
+    bool isProfessor(string id);
+    bool checkValidCourse(string id);
+    void shareCourseModeInput();
     void makeMessageText();
     void runSharePost();
     void runRemovePost();
+    void runShareCourse();
     bool isFloatId(string id);
     bool checkLogin();
     bool checkValidPassword(string id, string password);

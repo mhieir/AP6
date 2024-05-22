@@ -3,6 +3,7 @@
 
 #include "Global.hpp"
 #include "Entity.hpp"
+#include "CourseOffer.hpp"
 
 class Course : public Entity {
 public:
@@ -10,9 +11,11 @@ public:
     ~Course() {};
     int getCredit() {return credit;}
     int getPrerequisite() {return prerequisite;}
+    bool hasMajor(string major_id);
 protected:
     int credit, prerequisite;
     vector<string> majors_id;
+    vector<CourseOffer> course_offers;
 private:
 };
 

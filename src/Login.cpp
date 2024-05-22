@@ -20,19 +20,15 @@ void University::loginModeInput() {
             password = value;
         }
     }
-    try {
-        if(!checkValidId(id)) {
-            throw runtime_error(NOT_FOUND);
-        }
-        else if(!checkValidPassword(id, password)) {
-            throw runtime_error(PERMISSION_DENIED);
-        }
-        else {
-            findPeopleById(id);
-            throw runtime_error(OK);
-        }
-    } catch(runtime_error& ex) {
-        catchError(ex);
+    if(!checkValidId(id)) {
+        throw runtime_error(NOT_FOUND);
+    }
+    else if(!checkValidPassword(id, password)) {
+        throw runtime_error(PERMISSION_DENIED);
+    }
+    else {
+        findPeopleById(id);
+        throw runtime_error(OK);
     }
 }
 

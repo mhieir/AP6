@@ -42,6 +42,7 @@ const string MY_COURSES = "my_courses";
 const string NOT_FOUND = "Not Found";
 const string BAD_REQUEST = "Bad Request";
 const string PERMISSION_DENIED = "Permission denied";
+const string ZERO_STRING = "0";
 const char COMMA = ',';
 const char DOT = '.';
 const char SLASH = '/';
@@ -58,5 +59,6 @@ const int LOGOUT_MODE_SIZE = 3;
 const int CONNECT_MODE_SIZE = 5;
 const int SHARE_POST_MODE_SIZE = 7;
 const int REMOVE_POST_MODE_SIZE = 5;
+const int SHARE_COURSE_MODE_SIZE = 16;
 
 #endif

@@ -3,6 +3,8 @@
 
 University::University() {
     user = nullptr;
+    people.push_back(new UTAccount(ZERO_STRING, UT_ACCOUNT));
+    course_offer_id = 0;
 }
 
 void University::addMajor(string id, string name) {
@@ -65,6 +67,47 @@ bool University::checkValidId(string id) {
     return false;
 }
 
+bool University::checkValidCourse(string id) {
+    for(int i = 0; i < courses.size(); i++) {
+        if(courses[i]->getId() == id) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool University::isProfessor(string id) {
+    for(int i = 0; i < people.size(); i++) {
+        if(people[i]->getPeopleType() == PROFESSSOR and people[i]->getId() == id) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int University::findPeopleIndexById(string id) {
+    for(int i = 0; i < people.size(); i++) {
+        if(people[i]->getId() == id) {
+            return i;
+        }
+    }
+}
+
+int University::findCourseIndexById(string id) {
+    for(int i = 0; i < courses.size(); i++) {
+        if(courses[i]->getId() == id) {
+            return i;
+        }
+    }
+}
+
+bool University::isPresentByProfessor(string professor_id, string course_id) {
+    int professor_index = findPeopleIndexById(professor_id);
+    int course_index = findCourseIndexById(course_id);
+    return courses[course_index]->hasMajor(people[professor_index]->getMajorId());
+
+}
+
 void University::handlePostRequest() {
     if(input_line[1] == LITTLE_POST) {
         runSharePost();
@@ -79,7 +122,7 @@ void University::handlePostRequest() {
         runConnect();
     }
     else if(input_line[1] == COURSE_OFFER) {
-        
+        runShareCourse();
     }
     else {
         throw runtime_error(NOT_FOUND);
