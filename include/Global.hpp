@@ -59,6 +59,10 @@ const int LOGOUT_MODE_SIZE = 3;
 const int CONNECT_MODE_SIZE = 5;
 const int SHARE_POST_MODE_SIZE = 7;
 const int REMOVE_POST_MODE_SIZE = 5;
-const int SHARE_COURSE_MODE_SIZE = 16;
+const int PERSONAL_PAGE_MODE_SIZE = 5;
+const int GET_POST_MODE_SIZE = 7;
+const int SHARE_COURSE_MODE_SIZE = 15;
+const int GET_COURSE_MODE_SIZE_FIRST = 3;
+const int GET_COURSE_MODE_SIZE_SECOND = 5;
 
 #endif

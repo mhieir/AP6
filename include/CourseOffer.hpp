@@ -2,26 +2,28 @@
 #define COURSE_OFFER_INCLUDE
 
 #include "Global.hpp"
+#include "Course.hpp"
 #include "Time.hpp"
 #include "Date.hpp"
 
-class CourseOffer {
+class CourseOffer : public Course {
 public:
-    CourseOffer(int id, string course_id, string professor_id, int capacity, Time time, Date exam_time, int class_number);
+
+    CourseOffer(int courseOfferId, string id, string professor_id, int capacity, Time time, Date exam_time, int class_number,
+    string name, int credit, int prerequisite, vector<string> majors_id);
     ~CourseOffer() {};
-    int getId() {return id;}
+    int getCourseOfferId() {return courseOfferId;}
     int getClassNumber() {return class_number;}
     int getCapacity() {return capacity;}
-    string getCourseId() {return course_id;}
     string getProfessorId() {return professor_id;}
-    Time getTime() {return time;}
-    Date getExamTime() {return exam_time;}
-    int getClassNumber() {return class_number;}
+    string getTime() {return time.getCompleteTime();}
+    string getExamTime() {return exam_time.getCompleteDate();}
+    bool inSameTime(Time new_time);
 protected:
-    string course_id, professor_id;
+    string professor_id;
     Time time;
     Date exam_time;
-    int id, class_number, capacity;
+    int courseOfferId, class_number, capacity;
 private:
 };
 

@@ -13,5 +13,6 @@ void okMode();
 bool isNumber(string post_id);
 string makeText(vector<string> input_line, int start, int end);
 vector<int> findQuotion(vector<string> input_line);
+bool hasCommon(int a, int b, int c, int d);
 
 #endif

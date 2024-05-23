@@ -38,14 +38,29 @@ void University::shareCourseModeInput() {
     else if(!isPresentByProfessor(professor_id, course_id)) {
         throw runtime_error(PERMISSION_DENIED);
     }
+    else if(inCommonTime(professor_id, time)) {
+        throw runtime_error(PERMISSION_DENIED);
+    }
     else {
-
+        int professor_index = findPeopleIndexById(professor_id);
+        Time new_time(time);
+        Date new_date(exam_date);
+        int course_index = findCourseIndexById(course_id);
+        CourseOffer* new_course = new CourseOffer(course_offer_id, course_id, professor_id, stoi(capacity),
+         new_time, new_date, stoi(class_number), courses[course_index]->getName(), courses[course_index]->getCredit(),
+         courses[course_index]->getPrerequisite(), courses[course_index]->getMajorsId());
+        people[professor_index]->addCourse(new_course);
+        all_course_offers.push_back(new_course);
+        throw runtime_error(OK);
     }
 }
 
 void University::runShareCourse() {
     course_offer_id++;
     if(input_line.size() != SHARE_COURSE_MODE_SIZE) {
+        throw runtime_error(BAD_REQUEST);
+    }
+    else if(user->getId() != ZERO_STRING) {
         throw runtime_error(BAD_REQUEST);
     }
     else if(!checkLogin()) {
@@ -58,3 +73,4 @@ void University::runShareCourse() {
         shareCourseModeInput();
     }
 }
+

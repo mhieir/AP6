@@ -2,7 +2,7 @@
 #include "Primary.hpp"
 
 void University::runPersonalPage() {
-    if(input_line.size() != REMOVE_POST_MODE_SIZE) {
+    if(input_line.size() != PERSONAL_PAGE_MODE_SIZE) {
         throw runtime_error(BAD_REQUEST);
     }
     else if(!checkLogin()) {
@@ -21,6 +21,10 @@ void University::runPersonalPage() {
         throw runtime_error(NOT_FOUND);
     }
     else {
-        user->personalPage();
+        string major_name;
+        if(input_line[4] != ZERO_STRING) {
+            major_name = majors[findMajor(people[findPeopleIndexById(input_line[4])]->getMajorId())]->getName();
+        }
+        user->personalPage(major_name);
     }
 }

@@ -8,7 +8,8 @@ class UTAccount : public People {
 public:
     UTAccount(string id = ZERO_STRING, string password = UT_ACCOUNT);
     ~UTAccount() {};
-    void personalPage() {};
+    void personalPage(string major_name);
+    void getPost(string major_name, int post_id);
 protected:
 private:
 };

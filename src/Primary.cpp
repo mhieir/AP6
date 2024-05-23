@@ -92,3 +92,13 @@ vector<int> findQuotion(vector<string> input_line) {
     }
     return quotion;
 }
+
+
+bool hasCommon(int a, int b, int c, int d) {
+    if(max(a, c) < min(b, d)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}

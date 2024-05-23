@@ -33,6 +33,7 @@ bool University::checkValidPassword(string id, string password) {
 }
 
 
+
 bool University::checkValidPostNumber(string post_id) {
     if(!isNumber(post_id)) {
         return false;
@@ -78,7 +79,7 @@ bool University::checkValidCourse(string id) {
 
 bool University::isProfessor(string id) {
     for(int i = 0; i < people.size(); i++) {
-        if(people[i]->getPeopleType() == PROFESSSOR and people[i]->getId() == id) {
+        if(people[i]->getPeopleType() == _PROFESSOR and people[i]->getId() == id) {
             return true;
         }
     }
@@ -88,6 +89,31 @@ bool University::isProfessor(string id) {
 int University::findPeopleIndexById(string id) {
     for(int i = 0; i < people.size(); i++) {
         if(people[i]->getId() == id) {
+            return i;
+        }
+    }
+}
+
+bool University::checkValidPostNumberById(string post_id, string id) {
+    int index = findPeopleIndexById(id);
+    return people[index]->isInPost(stoi(post_id));
+}
+
+bool University::inCommonTime(string professor_id, string time) {
+    int professor_index = findPeopleIndexById(professor_id);
+    Time new_time(time);
+    if(people[professor_index]->validCourseTime(new_time)) {
+        return false;
+    }
+    else {
+        return true;
+    }
+
+}
+
+int University::findMajor(string id) {
+    for(int i = 0; i < majors.size(); i++) {
+        if(majors[i]->getId() == id) {
             return i;
         }
     }
@@ -105,7 +131,25 @@ bool University::isPresentByProfessor(string professor_id, string course_id) {
     int professor_index = findPeopleIndexById(professor_id);
     int course_index = findCourseIndexById(course_id);
     return courses[course_index]->hasMajor(people[professor_index]->getMajorId());
+}
 
+void University::showOneCourseOffers(int index) {
+    cout << all_course_offers[index]->getCourseOfferId() << " ";
+    cout << all_course_offers[index]->getName() << " ";
+    cout << all_course_offers[index]->getCapacity() << " ";
+    cout << people[findPeopleIndexById(all_course_offers[index]->getProfessorId())]->getName()  << " ";
+    cout << all_course_offers[index]->getTime() << " ";
+    cout << all_course_offers[index]->getExamTime() << " ";
+    cout << all_course_offers[index]->getClassNumber() << endl;
+}
+
+void University::showAllCourseOffers() {
+    for(int i = 0; i < all_course_offers.size(); i++) {
+        cout << all_course_offers[i]->getCourseOfferId() << " ";
+        cout << all_course_offers[i]->getName() << " ";
+        cout << all_course_offers[i]->getCapacity() << " ";
+        cout << people[findPeopleIndexById(all_course_offers[i]->getProfessorId())]->getName()  << endl;
+    }
 }
 
 void University::handlePostRequest() {
@@ -138,13 +182,13 @@ void University::handleGetRequest() {
         // runLogin();
     }
     else if(input_line[1] == LITTLE_POST) {
-        // runLogin();
+        runGetPost();
     }
     else if(input_line[1] == PERSONAL_PAGE) {
         runPersonalPage();
     }
     else if(input_line[1] == COURSES) {
-
+        runGetCourse();
     }
     else {
         throw runtime_error(NOT_FOUND);
@@ -195,3 +239,7 @@ void University::run(string input_string) {
         catchError(e);
     }
 }
+
+
+// POST course_offer ? course_id 1 professor_id 810420432 capacity 70 time Sunday:13-15 exam_date 1403/4/4 class_number 2
+// POST course_offer ? course_id 1 professor_id 810420432 capacity 40 time Saturday:13-15 exam_date 1403/4/4 class_number 2

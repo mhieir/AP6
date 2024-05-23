@@ -9,6 +9,7 @@
 #include "Student.hpp"
 #include "Professor.hpp"
 #include "UTAccount.hpp"
+#include "CourseOffer.hpp"
 
 class University {
 public:
@@ -25,9 +26,16 @@ private:
     vector<People*> people;
     vector<Course*> courses;
     vector<string> input_line;
+    vector<CourseOffer*> all_course_offers;
     People* user;
     int course_offer_id;
 
+    bool checkValidPostNumberById(string post_id, string id);
+    void validGetPostInput();
+    void runGetPost();
+    void runGetCourse();
+    int findMajor(string id);
+    bool inCommonTime(string professor_id, string time);
     bool isPresentByProfessor(string professor_id, string course_id);
     int findCourseIndexById(string id);
     int findPeopleIndexById(string id);
@@ -54,6 +62,9 @@ private:
     void handlePostRequest();
     void handlePutRequest() {};
     void handleDeleteRequest();
+    void showAllCourseOffers();
+    void showOneCourseOffers(int index);
+
 };
 
 #endif
