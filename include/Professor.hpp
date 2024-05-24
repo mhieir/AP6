@@ -1,3 +1,4 @@
+#pragma once
 #ifndef PROFESSOR_INCLUDE
 #define PROFESSOR_INCLUDE
 
@@ -5,7 +6,6 @@
 #include "People.hpp"
 #include "Time.hpp"
 #include "Major.hpp"
-#include "CourseOffer.hpp"
 
 enum Position {
     INSTRUCTOR,

@@ -2,6 +2,7 @@
 CXX = g++
 CXXFLAGS = -std=c++20 -Wall -Wextra -Wall -I./include -fsanitize=address -fsanitize=undefined
 
+INCLUDEDIR = include
 LFLAGS = -L./files
 SRCDIR = src
 OBJDIR = obj
@@ -17,7 +18,7 @@ all: $(EXECUTABLE)
 $(EXECUTABLE): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -o $@ $^ $(LFLAGS)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.cpp $(wildcard $(SRCDIR)/*.hpp)
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp $(wildcard $(INCLUDEDIR)/*.hpp)
 	mkdir -p $(OBJDIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@ -I$(MEDIA_PATH)
 

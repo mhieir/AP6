@@ -1,3 +1,4 @@
+#pragma once
 #ifndef UTACCOUNT_INCLUDE
 #define UTACCOUNT_INCLUDE
 

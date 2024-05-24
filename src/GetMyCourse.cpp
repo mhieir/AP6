@@ -16,6 +16,7 @@ void University::runGetMyCourse() {
     }
     else {
         user->showCourses(people);
+        
     }
 }
 

@@ -46,7 +46,7 @@ void University::shareCourseModeInput() {
         Time new_time(time);
         Date new_date(exam_date);
         int course_index = findCourseIndexById(course_id);
-        CourseOffer* new_course = new CourseOffer(course_offer_id, course_id, dynamic_cast<Professor*> (people[professor_index]), stoi(capacity),
+        CourseOffer* new_course = new CourseOffer(course_offer_id, course_id, professor_id, stoi(capacity),
          new_time, new_date, stoi(class_number), courses[course_index]->getName(), courses[course_index]->getCredit(),
          courses[course_index]->getPrerequisite(), courses[course_index]->getMajorsId());
         people[professor_index]->addCourse(new_course);

@@ -36,7 +36,8 @@ public:
     virtual int getSemester() {return 0;};
     bool hasCourseOfferById(int course_id);
     int numberOfCourses() {return (int) course_offers.size();}
-    void showCourses();
+    void showCourses(vector<People*> people);
+    string getProfessorName(vector<People*> people, string prof_id);
 protected:
     Major* major;
     string password;

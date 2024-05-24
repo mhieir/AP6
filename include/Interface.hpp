@@ -1,3 +1,4 @@
+#pragma once
 #ifndef INTERFACE_INCLUDE
 #define INTERFACE_INCLUDE
 

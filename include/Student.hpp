@@ -1,3 +1,4 @@
+#pragma once
 #ifndef STUDENT_INCLUDE
 #define STUDENT_INCLUDE
 

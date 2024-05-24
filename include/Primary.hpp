@@ -1,3 +1,4 @@
+#pragma once
 #ifndef PRIMARY_INCLUDE
 #define PRIMARY_INCLUDE
 

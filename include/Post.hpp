@@ -1,3 +1,4 @@
+#pragma once
 #ifndef POST_INCLUDE
 #define POST_INCLUDE
 

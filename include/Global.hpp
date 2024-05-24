@@ -1,3 +1,4 @@
+#pragma once
 // in God we trust
 #ifndef GLOBAL_INCLUDE
 #define GLOBAL_INCLUDE

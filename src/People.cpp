@@ -91,7 +91,8 @@ void People::showPosts() {
 }
 
 
-bool People::hasCourseOfferById(int course_id) {
+ bool People::hasCourseOfferById(int course_id) {
+   // cout << course_offers.size() << endl;
     for(int i = 0; i < course_offers.size(); i++) {
         cout << course_offers[i]->getCourseOfferId() << " " << course_id << endl;
         if(course_offers[i]->getCourseOfferId() == course_id) {
@@ -99,14 +100,23 @@ bool People::hasCourseOfferById(int course_id) {
         }
     }
     return false;
+ }
+
+string People::getProfessorName(vector<People*> people, string prof_id) {
+    for(int i = 0; i < people.size(); i++) {
+        if(people[i]->getId() == prof_id) {
+            return people[i]->getName();
+        }
+    }
 }
 
-void People::showCourses(){
+
+void People::showCourses(vector<People*> people){
     for(int i = 0; i < course_offers.size(); i++) {
         cout << course_offers[i]->getCourseOfferId() << " ";
         cout << course_offers[i]->getName() << " ";
         cout << course_offers[i]->getCapacity() << " ";
-        cout << course_offers[i]->getProfessorName() << " ";
+        cout << getProfessorName(people, course_offers[i]->getProfessorId())  << " ";
         cout << course_offers[i]->getTime() << " ";
         cout << course_offers[i]->getExamTime() << " ";
         cout << course_offers[i]->getClassNumber() << endl;

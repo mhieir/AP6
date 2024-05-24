@@ -1,3 +1,4 @@
+#pragma once
 #ifndef ENTITY_INCLUDE
 #define ENTITY_INCLUDE
 

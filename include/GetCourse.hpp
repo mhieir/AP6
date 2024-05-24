@@ -1,3 +1,4 @@
+#pragma once
 #ifndef GET_COURSE_INCLUDE
 #define GET_COURSE_INCLUDE
 

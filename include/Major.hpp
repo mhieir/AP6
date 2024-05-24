@@ -1,3 +1,4 @@
+#pragma once
 #ifndef MAJOR_INCLUDE
 #define MAJOR_INCLUDE
 

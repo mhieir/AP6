@@ -1,8 +1,8 @@
 #include "CourseOffer.hpp"
 #include "Primary.hpp"
 
-CourseOffer::CourseOffer(int courseOfferId, string id, Professor* professor, int capacity, Time time, Date exam_time, int class_number, string name, int credit, int prerequisite, vector<string> majors_id) :
-Course(id, name, credit, prerequisite, majors_id), capacity(capacity), courseOfferId(courseOfferId), time(time), exam_time(exam_time), professor(professor), class_number(class_number) {}
+CourseOffer::CourseOffer(int courseOfferId, string id, string professor_id, int capacity, Time time, Date exam_time, int class_number, string name, int credit, int prerequisite, vector<string> majors_id) :
+Course(id, name, credit, prerequisite, majors_id), capacity(capacity), courseOfferId(courseOfferId), time(time), exam_time(exam_time), professor_id(professor_id), class_number(class_number) {}
 
 
 bool CourseOffer::inSameTime(Time new_time) {

@@ -1,3 +1,4 @@
+#pragma once
 #ifndef DATE_INCLUDE
 #define DATE_INCLUDE
 

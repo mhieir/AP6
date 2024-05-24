@@ -1,3 +1,4 @@
+#pragma once
 #ifndef TIME_INCLUDE
 #define TIME_INCLUDE
 
