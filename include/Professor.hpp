@@ -4,6 +4,7 @@
 #include "Global.hpp"
 #include "People.hpp"
 #include "Time.hpp"
+#include "Major.hpp"
 #include "CourseOffer.hpp"
 
 enum Position {
@@ -15,15 +16,13 @@ enum Position {
 
 class Professor : public People {
 public:
-    Professor(string id, string name, string major_id, string string_position, string password);
+    Professor(string id, string name, Major* major, string string_position, string password);
     ~Professor() {};
     Position getPosition() {return position;}
-    void personalPage(string major_name);
-    void getPost(string major_name, int post_id);
-    void addCourse(CourseOffer* new_course_offer) {course_offers.push_back(new_course_offer);}
+    void personalPage();
+    void getPost(int post_id);
 protected:
     string string_position;
-    vector<CourseOffer*> course_offers;
     Position position;
 private:
 };

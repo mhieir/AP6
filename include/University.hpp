@@ -17,8 +17,10 @@ public:
     ~University() {};
     void run(string input_string);
     void addMajor(string id, string name);
-    void addStudent(string id, string name, string major_id, int semester, string password);
-    void addProfessor(string id, string name, string major_id, string string_position, string password);
+    void addStudent(string id, string name, Major* major, int semester, string password);
+    void addProfessor(string id, string name, Major* major, string string_position, string password);
+    int findMajor(string id);
+    Major* getMajorById(int index);
     void addCourse(string id, string name, int credit, int prerequisite, vector<string> majors_id);
 protected:
 private:
@@ -30,11 +32,14 @@ private:
     People* user;
     int course_offer_id;
 
+    void runGetMyCourse();
+    void runDeleteCourse();
+    bool isStudent();
+    void runPutCourse();
     bool checkValidPostNumberById(string post_id, string id);
     void validGetPostInput();
     void runGetPost();
     void runGetCourse();
-    int findMajor(string id);
     bool inCommonTime(string professor_id, string time);
     bool isPresentByProfessor(string professor_id, string course_id);
     int findCourseIndexById(string id);
@@ -68,3 +73,22 @@ private:
 };
 
 #endif
+
+// 
+
+// POST login ? id 0 password UT_account
+// OK
+// POST course_offer ? course_id 1 professor_id 810420432 capacity 70 time Sunday:13-15 exam_date 1403/4/4 class_number 2
+// OK
+// POST course_offer ? course_id 1 professor_id 810420432 capacity 40 time Saturday:13-15 exam_date 1403/4/4 class_number 2
+// OK
+// POST logout ?
+// OK
+// POST login ? password ImtheproblemItsme id 810102612
+// OK
+// PUT my_courses ? id 1
+// fucl
+// Bad Request
+// PUT my_courses ? id 2
+// fucl
+// Bad Request

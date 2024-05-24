@@ -11,16 +11,16 @@ void University::addMajor(string id, string name) {
     majors.push_back(new Major(id, name));
 }
 
-void University::addStudent(string id, string name, string major_id, int semester, string password) {
-    people.push_back(new Student(id, name, major_id, semester, password));
+void University::addStudent(string id, string name, Major* major, int semester, string password) {
+    people.push_back(new Student(id, name, major, semester, password));
 }
 
 void University::addCourse(string id, string name, int credit, int prerequisite, vector<string> majors_id) {
     courses.push_back(new Course(id, name, credit, prerequisite, majors_id));
 }
 
-void University::addProfessor(string id, string name, string major_id, string string_position, string password) {
-    people.push_back(new Professor(id, name, major_id, string_position, password));
+void University::addProfessor(string id, string name, Major* major, string string_position, string password) {
+    people.push_back(new Professor(id, name, major, string_position, password));
 }
 
 bool University::checkValidPassword(string id, string password) {
@@ -32,7 +32,14 @@ bool University::checkValidPassword(string id, string password) {
     return false;
 }
 
-
+bool University::isStudent() {
+    if(user->getPeopleType() == _STUDENT) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
 
 bool University::checkValidPostNumber(string post_id) {
     if(!isNumber(post_id)) {
@@ -152,6 +159,10 @@ void University::showAllCourseOffers() {
     }
 }
 
+Major* University::getMajorById(int index) {
+    return majors[index];
+}
+
 void University::handlePostRequest() {
     if(input_line[1] == LITTLE_POST) {
         runSharePost();
@@ -176,7 +187,7 @@ void University::handlePostRequest() {
 
 void University::handleGetRequest() {
     if(input_line[1] == MY_COURSES) {
-        
+        runGetMyCourse();
     }
     else if(input_line[1] == NOTIFICATION) {
         // runLogin();
@@ -201,7 +212,7 @@ void University::handleDeleteRequest() {
         runRemovePost();
     }
     else if(input_line[1] == MY_COURSES) {
-        // runLogin();
+        runDeleteCourse();
     }
     else {
         throw runtime_error(NOT_FOUND);
@@ -215,8 +226,8 @@ void University::handleInput() {
     else if(input_line[0] == POST) {
         handlePostRequest();
     }
-    else if(input_line[0] == PUT) {
-        handlePutRequest();
+    else if(input_line[0] == PUT and input_line[1] == MY_COURSES) {
+        runPutCourse();
     }
     else if(input_line[0] == DELETE) {
         handleDeleteRequest();
@@ -229,7 +240,7 @@ void University::handleInput() {
 void University::run(string input_string) {
     input_line = splitByInputSign(input_string, SPACE);
     try {
-        if(input_line.size() > 0) {
+        if(input_line.size() > 2) {
             handleInput();
         }
         else {

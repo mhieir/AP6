@@ -11,7 +11,7 @@ void Interface::makeMajorString(vector<string> major_string) {
 void Interface::makeStudentString(vector<string> student_string) {
     for(int i = 1; i < student_string.size(); i++) {
         vector<string> splitted = splitByInputSign(student_string[i], COMMA);
-        university->addStudent(splitted[0], splitted[1], splitted[2], stoi(splitted[3]), splitted[4]);
+        university->addStudent(splitted[0], splitted[1], university->getMajorById(university->findMajor(splitted[2])), stoi(splitted[3]), splitted[4]);
     }
 }
 
@@ -25,7 +25,7 @@ void Interface::makeCourseString(vector<string> course_string) {
 void Interface::makeProfessorString(vector<string> professor_string) {
     for(int i = 1; i < professor_string.size(); i++) {
         vector<string> splitted = splitByInputSign(professor_string[i], COMMA);
-        university->addProfessor(splitted[0], splitted[1], splitted[2], splitted[3], splitted[4]);
+        university->addProfessor(splitted[0], splitted[1], university->getMajorById(university->findMajor(splitted[2])), splitted[3], splitted[4]);
     }
 }
 

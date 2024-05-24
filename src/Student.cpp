@@ -1,16 +1,16 @@
 #include "Student.hpp"
 
-Student::Student(string id, string name, string major_id, int semester, string password) :
-People(id, name, major_id, password, _STUDENT), semester(semester) {}
+Student::Student(string id, string name, Major* major, int semester, string password) :
+People(id, name, major, password, _STUDENT), semester(semester) {}
 
-void Student::personalPage(string major_name) {
-    cout << name << " " << major_name << " " << semester << " ";
+void Student::personalPage() {
+    cout << name << " " << major->getName() << " " << semester << " ";
     People ::showOfferCourses();
     People ::showPosts();
 }
 
-void Student::getPost(string major_name, int post_id) {
-    cout << name << " " << major_name << " " << semester << " ";
+void Student::getPost(int post_id) {
+    cout << name << " " << major->getName() << " " << semester << " ";
     People ::showOfferCourses();
     People ::showOnePost(post_id);
 }

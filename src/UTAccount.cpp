@@ -1,14 +1,14 @@
 #include "UTAccount.hpp"
 
 UTAccount::UTAccount(string id, string password) :
-People(id, NULL_STRING, NULL_STRING, password, _UTACCOUNT) {}
+People(id, NULL_STRING, nullptr, password, _UTACCOUNT) {}
 
-void UTAccount::personalPage(string major_name) {
+void UTAccount::personalPage() {
     cout << UT_ACCOUNT << endl;
     People ::showPosts();
 }
 
-void UTAccount::getPost(string major_name, int post_id) {
+void UTAccount::getPost(int post_id) {
     cout << UT_ACCOUNT << endl;
     People ::showOnePost(post_id);
 }

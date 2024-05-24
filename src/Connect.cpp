@@ -24,7 +24,7 @@ void University::runConnect() {
         throw runtime_error(BAD_REQUEST);
     }
     else {
+        user->addConnection(people[findPeopleIndexById(input_line[4])]);
         throw runtime_error(OK);
-        user->addConnection(input_line[4]);
     }
 }

@@ -21,10 +21,6 @@ void University::runPersonalPage() {
         throw runtime_error(NOT_FOUND);
     }
     else {
-        string major_name;
-        if(input_line[4] != ZERO_STRING) {
-            major_name = majors[findMajor(people[findPeopleIndexById(input_line[4])]->getMajorId())]->getName();
-        }
-        user->personalPage(major_name);
+        user->personalPage();
     }
 }

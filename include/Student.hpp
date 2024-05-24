@@ -6,11 +6,11 @@
 
 class Student : public People {
 public:
-    Student(string id, string name, string major_id, int semester, string password);
+    Student(string id, string name, Major* major, int semester, string password);
     ~Student() {};
     int getSemester() {return semester;}
-    void personalPage(string major_name);
-    void getPost(string major_name, int post_id);
+    void personalPage();
+    void getPost(int post_id);
 protected:
     int semester;
 private:

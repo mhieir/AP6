@@ -2,7 +2,6 @@
 #include "Primary.hpp"
 
 void University::runGetCourse() {
-    cout << course_offer_id << endl;
     if(input_line.size() != GET_COURSE_MODE_SIZE_FIRST and input_line.size() != GET_COURSE_MODE_SIZE_SECOND) {
         throw runtime_error(BAD_REQUEST);
     }

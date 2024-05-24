@@ -19,11 +19,7 @@ void University::validGetPostInput() {
         throw runtime_error(NOT_FOUND);
     }
     else {
-        string major_name;
-        if(input_line[4] != ZERO_STRING) {
-            major_name = majors[findMajor(people[findPeopleIndexById(input_line[4])]->getMajorId())]->getName();
-        }
-        user->getPost(major_name, stoi(post_id));
+        user->getPost(stoi(post_id));
     }
 }
 

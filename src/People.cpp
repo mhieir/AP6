@@ -1,13 +1,15 @@
 #include "People.hpp"
 
-People::People(string id, string name, string major_id, string password, PeopleType people_type) :
-Entity(id, name), major_id(major_id), password(password), people_type(people_type) {
+People::People(string id, string name, Major* major, string password, PeopleType people_type) :
+Entity(id, name), major(major), password(password), people_type(people_type) {
     post_number = 1;
 }
 
 bool People::inConnection(string new_id) {
+    cout << connections.size() << endl;
     for(int i = 0; i < connections.size(); i++) {
-        if(new_id == connections[i]) return true;
+        cout << new_id << " " << connections[i]->getId() << endl;
+        if(new_id == connections[i]->getId()) return true;
     }
     return false;
 }
@@ -53,6 +55,15 @@ bool People::validCourseTime(Time new_time) {
     return true;
 }
 
+bool People::validCourseDate(string new_date) {
+    for(int i = 0; i < course_offers.size(); i++) {
+        if(course_offers[i]->getExamTime() == new_date) {
+            return false;
+        }
+    }
+    return true;
+}
+
 void People::removeCourse(int course_offer_id) {
     for(int i = 0; i < course_offers.size(); i++) {
         if(course_offers[i]->getCourseOfferId() == course_offer_id) {
@@ -77,4 +88,27 @@ void People::showPosts() {
         cout << posts[i]->getId() << " " << posts[i]->getTitle() << endl;
     }
     if(posts.empty()) cout << endl;
+}
+
+
+bool People::hasCourseOfferById(int course_id) {
+    for(int i = 0; i < course_offers.size(); i++) {
+        cout << course_offers[i]->getCourseOfferId() << " " << course_id << endl;
+        if(course_offers[i]->getCourseOfferId() == course_id) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void People::showCourses(){
+    for(int i = 0; i < course_offers.size(); i++) {
+        cout << course_offers[i]->getCourseOfferId() << " ";
+        cout << course_offers[i]->getName() << " ";
+        cout << course_offers[i]->getCapacity() << " ";
+        cout << course_offers[i]->getProfessorName() << " ";
+        cout << course_offers[i]->getTime() << " ";
+        cout << course_offers[i]->getExamTime() << " ";
+        cout << course_offers[i]->getClassNumber() << endl;
+    }
 }
