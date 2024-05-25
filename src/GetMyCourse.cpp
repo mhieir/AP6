@@ -5,7 +5,7 @@ void University::runGetMyCourse() {
     if(input_line.size() != GET_MY_COURSE_MODE_SIZE) {
         throw runtime_error(BAD_REQUEST);
     }
-    else if(!checkLogin()) {
+    else if(!checkLogin() || !isStudent()) {
         throw runtime_error(PERMISSION_DENIED);
     }
     else if(!isQuestionMark(input_line[2])) {
@@ -15,8 +15,7 @@ void University::runGetMyCourse() {
         throw runtime_error(EMPTY);
     }
     else {
-        user->showCourses(people);
-        
+        user->showCourses(output, people);
     }
 }
 

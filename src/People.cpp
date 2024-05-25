@@ -6,9 +6,7 @@ Entity(id, name), major(major), password(password), people_type(people_type) {
 }
 
 bool People::inConnection(string new_id) {
-    cout << connections.size() << endl;
     for(int i = 0; i < connections.size(); i++) {
-        cout << new_id << " " << connections[i]->getId() << endl;
         if(new_id == connections[i]->getId()) return true;
     }
     return false;
@@ -37,13 +35,13 @@ bool People::isInPost(int post_id) {
     return false;
 }
 
-void People::showOnePost(int post_id) {
+void People::showOnePost(vector<string>& output, int post_id) {
     for(int i = 0; i < (int) posts.size(); i++) {
         if(posts[i]->getId() == post_id) {
-            cout << posts[i]->getId() << " " << posts[i]->getTitle() << " " << posts[i]->getMessage();
+            output.push_back(to_string(posts[i]->getId()) + SPACE + posts[i]->getTitle() + SPACE +  posts[i]->getMessage());
         }
     }
-    cout << endl;
+    output.push_back("\n");
 }
 
 bool People::validCourseTime(Time new_time) {
@@ -73,28 +71,24 @@ void People::removeCourse(int course_offer_id) {
     }
 }
 
-void People::showOfferCourses() {
+void People::showOfferCourses(vector<string>& output) {
     for(int i = 0; i + 1 < course_offers.size(); i++) {
-        cout << course_offers[i]->getName() << COMMA;
+        output.push_back( course_offers[i]->getName() + COMMA);
     }
     if(!course_offers.empty()) {
-        cout << course_offers.back()->getName();
+        output.push_back(course_offers.back()->getName());
     }
-    cout << endl;
+    output.push_back("\n");
 }
 
-void People::showPosts() {
-    for(int i = 0; i < posts.size(); i++) {
-        cout << posts[i]->getId() << " " << posts[i]->getTitle() << endl;
+void People::showPosts(vector<string>& output) {
+    for(int i = (int) posts.size() - 1; 0 <= i; i--) {
+        output.push_back(to_string(posts[i]->getId()) + SPACE + posts[i]->getTitle() + '\n');
     }
-    if(posts.empty()) cout << endl;
 }
 
-
- bool People::hasCourseOfferById(int course_id) {
-   // cout << course_offers.size() << endl;
+bool People::hasCourseOfferById(int course_id) {
     for(int i = 0; i < course_offers.size(); i++) {
-        cout << course_offers[i]->getCourseOfferId() << " " << course_id << endl;
         if(course_offers[i]->getCourseOfferId() == course_id) {
             return true;
         }
@@ -110,15 +104,38 @@ string People::getProfessorName(vector<People*> people, string prof_id) {
     }
 }
 
-
-void People::showCourses(vector<People*> people){
+void People::showCourses(vector<string>& output, vector<People*> people){
     for(int i = 0; i < course_offers.size(); i++) {
-        cout << course_offers[i]->getCourseOfferId() << " ";
-        cout << course_offers[i]->getName() << " ";
-        cout << course_offers[i]->getCapacity() << " ";
-        cout << getProfessorName(people, course_offers[i]->getProfessorId())  << " ";
-        cout << course_offers[i]->getTime() << " ";
-        cout << course_offers[i]->getExamTime() << " ";
-        cout << course_offers[i]->getClassNumber() << endl;
+        output.push_back(to_string(course_offers[i]->getCourseOfferId()) + SPACE + course_offers[i]->getName() + SPACE);
+        output.push_back(to_string(course_offers[i]->getCapacity()) + SPACE);
+        output.push_back(getProfessorName(people, course_offers[i]->getProfessorId()) + SPACE);
+        output.push_back(course_offers[i]->getTime() + SPACE + course_offers[i]->getExamTime() + SPACE);
+        output.push_back(to_string(course_offers[i]->getClassNumber()) + "\n");
     }
+}
+
+void People::addNotification(string notification_line) {
+    notifications.push_back(notification_line);
+}
+
+bool People::emptyNotification() {
+    if(notifications.size() == 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+void People::shareNotification(string command) {
+    for(int i = 0; i < connections.size(); i++) {
+        connections[i]->addNotification(command);
+    }
+}
+
+void People::printNotification(vector<string>& output) {
+    for(int i = (int) notifications.size() - 1; 0 <= i; i--) {
+        output.push_back(notifications[i]);
+    }
+    notifications.clear();
 }

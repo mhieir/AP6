@@ -6,7 +6,7 @@
 #include "University.hpp"
 
 class Interface {
-public:
+public: 
     Interface(char *argv[]);
     ~Interface() {};
     void run();
@@ -14,6 +14,7 @@ protected:
 private:
     University* university;
 
+    void showOutput(vector<string> outputs);
     void makeMajorString(vector<string> major_string);
     void makeStudentString(vector<string> student_string);
     void makeCourseString(vector<string> course_string);

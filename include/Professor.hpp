@@ -19,8 +19,8 @@ public:
     Professor(string id, string name, Major* major, string string_position, string password);
     ~Professor() {};
     Position getPosition() {return position;}
-    void personalPage();
-    void getPost(int post_id);
+    void personalPage(vector<string>& output);
+    void getPost(vector<string>& output, int post_id);
 protected:
     string string_position;
     Position position;

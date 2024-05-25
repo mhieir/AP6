@@ -37,10 +37,18 @@ Interface::Interface(char *argv[]) {
     makeProfessorString(read_csv(argv[4]));
 }
 
+void Interface::showOutput(vector<string> outputs) {
+    for(string output : outputs) {
+        cout << output;
+    }
+}
 
 void Interface::run() {
+    university->makeDefaultConnections();
     string line;
     while (getline(cin, line)) {
         university->run(line);
+        showOutput(university->getOutput());
+        university->cleanOutput();
     }
 }

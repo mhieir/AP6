@@ -9,8 +9,8 @@ class UTAccount : public People {
 public:
     UTAccount(string id = ZERO_STRING, string password = UT_ACCOUNT);
     ~UTAccount() {};
-    void personalPage();
-    void getPost(int post_id);
+    void personalPage(vector<string>& output);
+    void getPost(vector<string>& output, int post_id);
 protected:
 private:
 };

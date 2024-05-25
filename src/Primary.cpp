@@ -12,35 +12,78 @@ vector<string> read_csv(const char path[256]) {
     return lines;
 }
 
-void signInSplitting(string &result, vector<string> &splitted)
-{
+void signInSplitting(string &result, vector<string> &splitted) {
     splitted.push_back(result);
     result = NULL_STRING;
 }
 
-void notSignInSplitting(string &result, char character)
-{
+void notSignInSplitting(string &result, char character) {
     result += character;
 }
 
-vector<string> splitByInputSign(string inputString, char sign)
-{
+bool hasQuotion(string inputString) {
+    for (auto &character : inputString){
+        if (character == QUOTION) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void handleQoution(int& i, string& result, vector<string>& splitted, string inputString, int& check) {
+    for(i; i < inputString.size(); i++) {
+        notSignInSplitting(result, inputString[i]);
+        if(inputString[i] == QUOTION) {
+            check++;
+            if((int) result.size() != 1) {
+                signInSplitting(result, splitted);
+                break;
+            }
+        }
+    }
+}
+
+vector<string> splitInQuotionMode(string inputString) {
+    int check = 0;
+    string result = NULL_STRING;
+    vector<string> splitted;
+    for(int i = 0; i < inputString.size(); i++) {
+        if (inputString[i] == SPACE) {
+            if(result != NULL_STRING) signInSplitting(result, splitted);
+        }
+        else if(inputString[i] != QUOTION) {
+            notSignInSplitting(result, inputString[i]);
+        }
+        else {
+            if(result != NULL_STRING) {
+                splitted.clear();
+                return splitted;
+            }
+            handleQoution(i, result, splitted, inputString, check);
+        }
+    }
+
+    if(check != 4) splitted.clear();
+    if(result != NULL_STRING) signInSplitting(result, splitted);
+    return splitted;
+}
+
+vector<string> splitByInputSign(string inputString, char sign) {
+    if(hasQuotion(inputString)) {
+        return splitInQuotionMode(inputString);
+    }
     string result = NULL_STRING;
     vector<string> splitted;
     for (auto &character : inputString){
         if (character == sign) {
-            signInSplitting(result, splitted);
+            if(result != NULL_STRING) signInSplitting(result, splitted);
         }
         else {
             notSignInSplitting(result, character);
         }
     }
-    signInSplitting(result, splitted);
+    if(result != NULL_STRING) signInSplitting(result, splitted);
     return splitted;
-}
-
-void catchError(runtime_error& ex) {
-    cerr << ex.what() << endl;
 }
 
 bool isQuestionMark(string input_line) {
@@ -51,14 +94,6 @@ bool isQuestionMark(string input_line) {
         return false;
     }
 
-}
-
-void okMode() {
-	try {
-        throw runtime_error(OK);
-    } catch(runtime_error& ex) {
-        catchError(ex);
-    }
 }
 
 bool isNumber(string post_id) {
@@ -72,11 +107,10 @@ bool isNumber(string post_id) {
 
 string makeText(vector<string> input_line, int start, int end) {
     string result = NULL_STRING;
-    for(int i = start; i <= end; i++) {
+    for(int i = start; i < end; i++) {
         result += input_line[i] + SPACE;
     }
-    result = result.substr(0, int(result.size()) - 2);
-    result = result.substr(1, int(result.size()) - 1);
+    result += input_line[end];
     return result;
 }
 
@@ -86,13 +120,12 @@ vector<int> findQuotion(vector<string> input_line) {
         if(input_line[i][0] == QUOTION) {
             quotion.push_back(i);
         }
-        if(input_line[i].back() == QUOTION) {
+        if(input_line[i].back() == QUOTION and (int) input_line[i].size() != 1) {
             quotion.push_back(i);
         }
     }
     return quotion;
 }
-
 
 bool hasCommon(int a, int b, int c, int d) {
     if(max(a, c) < min(b, d)) {

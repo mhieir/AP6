@@ -15,11 +15,14 @@ void University::validGetPostInput() {
     if(!isNumber(id) || !isNumber(post_id)) {
         throw runtime_error(BAD_REQUEST);
     }
+    else if(stoi(id) == 0 || stoi(post_id) == 0) {
+        throw runtime_error(BAD_REQUEST);
+    }
     else if(!checkValidId(id) || !checkValidPostNumberById(post_id, id)) {
         throw runtime_error(NOT_FOUND);
     }
     else {
-        user->getPost(stoi(post_id));
+        people[findPeopleIndexById(input_line[4])]->getPost(output, stoi(post_id));
     }
 }
 
@@ -27,11 +30,14 @@ void University::runGetPost() {
     if(input_line.size() != GET_POST_MODE_SIZE) {
         throw runtime_error(BAD_REQUEST);
     }
+    else if(!isQuestionMark(input_line[2])) {
+        throw runtime_error(BAD_REQUEST);
+    }
     else if(!checkLogin()) {
         throw runtime_error(PERMISSION_DENIED);
     }
-    else if(!isQuestionMark(input_line[2])) {
-        throw runtime_error(BAD_REQUEST);
+    else if(user->getId() == ZERO_STRING) {
+        throw runtime_error(PERMISSION_DENIED);
     }
     else {
         validGetPostInput();

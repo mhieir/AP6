@@ -2,23 +2,14 @@
 #include "Primary.hpp"
 
 void University::makeMessageText() {
-    vector<int> quotion = findQuotion(input_line);
-
-    if(quotion.size() != 4) {
-        throw runtime_error(BAD_REQUEST);
-    }
-    else if(quotion[0] != 4) {
-        throw runtime_error(BAD_REQUEST);
-    }
-    else if(quotion[3] + 1 != (int) input_line.size()) {
-        throw runtime_error(BAD_REQUEST);
-    }
-    else if(input_line[quotion[0] - 1] == TITLE and input_line[quotion[2] - 1] == MESSAGE) {
-        user->addPost(makeText(input_line, quotion[0], quotion[1]), makeText(input_line, quotion[2], quotion[3]));
+    if(input_line[3] == TITLE and input_line[5] == MESSAGE) {
+        user->addPost(input_line[4], input_line[6]);
+        user->shareNotification(user->getId() + SPACE + user->getName() + COLON + SPACE + NEW_POST + '\n');
         throw runtime_error(OK);
     }
-    else if(input_line[quotion[0] - 1] == MESSAGE and input_line[quotion[2] - 1] == TITLE) {
-        user->addPost(makeText(input_line, quotion[2], quotion[3]), makeText(input_line, quotion[0], quotion[1]));
+    else if(input_line[5] == TITLE and input_line[3] == MESSAGE) {
+        user->addPost(input_line[6], input_line[4]);
+        user->shareNotification(user->getId() + SPACE + user->getName() + COLON + SPACE + NEW_POST + '\n');
         throw runtime_error(OK);
     }
     else {
@@ -27,7 +18,7 @@ void University::makeMessageText() {
 }
 
 void University::runSharePost() {
-    if(input_line.size() < SHARE_POST_MODE_SIZE) {
+    if(input_line.size() != SHARE_POST_MODE_SIZE) {
         throw runtime_error(BAD_REQUEST);
     }
     else if(!checkLogin()) {

@@ -22,6 +22,9 @@ public:
     int findMajor(string id);
     Major* getMajorById(int index);
     void addCourse(string id, string name, int credit, int prerequisite, vector<string> majors_id);
+    vector<string> getOutput() {return output;}
+    void cleanOutput() {output.clear();}
+    void makeDefaultConnections();
 protected:
 private:
     vector<Major*> majors;
@@ -29,9 +32,11 @@ private:
     vector<Course*> courses;
     vector<string> input_line;
     vector<CourseOffer*> all_course_offers;
+    vector<string> output;
     People* user;
     int course_offer_id;
 
+    void runNotification();
     void runGetMyCourse();
     void runDeleteCourse();
     bool isStudent();
@@ -69,6 +74,7 @@ private:
     void handleDeleteRequest();
     void showAllCourseOffers();
     void showOneCourseOffers(int index);
+    void catchError(runtime_error& ex);
 
 };
 

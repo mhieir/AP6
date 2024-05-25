@@ -3,8 +3,7 @@
 
 University::University() {
     user = nullptr;
-    people.push_back(new UTAccount(ZERO_STRING, UT_ACCOUNT));
-    course_offer_id = 0;
+    course_offer_id = 1;
 }
 
 void University::addMajor(string id, string name) {
@@ -21,6 +20,10 @@ void University::addCourse(string id, string name, int credit, int prerequisite,
 
 void University::addProfessor(string id, string name, Major* major, string string_position, string password) {
     people.push_back(new Professor(id, name, major, string_position, password));
+}
+
+void University::catchError(runtime_error& ex) {
+    output.push_back(string(ex.what()) + "\n");
 }
 
 bool University::checkValidPassword(string id, string password) {
@@ -41,12 +44,7 @@ bool University::isStudent() {
     }
 }
 
-bool University::checkValidPostNumber(string post_id) {
-    if(!isNumber(post_id)) {
-        return false;
-    }
-    return user->isInPost(stoi(post_id));
-}
+
 
 bool University::checkLogin() {
     if(user != nullptr) {
@@ -141,21 +139,22 @@ bool University::isPresentByProfessor(string professor_id, string course_id) {
 }
 
 void University::showOneCourseOffers(int index) {
-    cout << all_course_offers[index]->getCourseOfferId() << " ";
-    cout << all_course_offers[index]->getName() << " ";
-    cout << all_course_offers[index]->getCapacity() << " ";
-    cout << people[findPeopleIndexById(all_course_offers[index]->getProfessorId())]->getName()  << " ";
-    cout << all_course_offers[index]->getTime() << " ";
-    cout << all_course_offers[index]->getExamTime() << " ";
-    cout << all_course_offers[index]->getClassNumber() << endl;
+    output.push_back(to_string(all_course_offers[index]->getCourseOfferId()) + SPACE);
+    output.push_back(all_course_offers[index]->getName() + SPACE);
+    output.push_back(to_string(all_course_offers[index]->getCapacity()) + SPACE);
+    output.push_back(people[findPeopleIndexById(all_course_offers[index]->getProfessorId())]->getName() + SPACE);
+    output.push_back(all_course_offers[index]->getTime()  + SPACE);
+    output.push_back(all_course_offers[index]->getExamTime() + SPACE);
+    output.push_back(to_string(all_course_offers[index]->getClassNumber()) + "\n");
+
 }
 
 void University::showAllCourseOffers() {
     for(int i = 0; i < all_course_offers.size(); i++) {
-        cout << all_course_offers[i]->getCourseOfferId() << " ";
-        cout << all_course_offers[i]->getName() << " ";
-        cout << all_course_offers[i]->getCapacity() << " ";
-        cout << people[findPeopleIndexById(all_course_offers[i]->getProfessorId())]->getName()  << endl;
+        output.push_back(to_string(all_course_offers[i]->getCourseOfferId()) + SPACE);
+        output.push_back(all_course_offers[i]->getName()  + SPACE);
+        output.push_back(to_string(all_course_offers[i]->getCapacity()) + SPACE);
+        output.push_back(people[findPeopleIndexById(all_course_offers[i]->getProfessorId())]->getName() + "\n");
     }
 }
 
@@ -182,7 +181,6 @@ void University::handlePostRequest() {
     else {
         throw runtime_error(NOT_FOUND);
     }
-
 }
 
 void University::handleGetRequest() {
@@ -190,7 +188,7 @@ void University::handleGetRequest() {
         runGetMyCourse();
     }
     else if(input_line[1] == NOTIFICATION) {
-        // runLogin();
+        runNotification();
     }
     else if(input_line[1] == LITTLE_POST) {
         runGetPost();
@@ -234,6 +232,14 @@ void University::handleInput() {
     }
     else {
         throw runtime_error(BAD_REQUEST);
+    }
+}
+
+void University::makeDefaultConnections() {
+    people.push_back(new UTAccount(ZERO_STRING, UT_ACCOUNT));
+    for(int i = 0; i + 1 < people.size(); i++) {
+        people[i]->addConnection(people.back());
+        people.back()->addConnection(people[i]);
     }
 }
 

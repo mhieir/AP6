@@ -42,8 +42,12 @@ const string CLASS_NUMBER = "class_number";
 const string MY_COURSES = "my_courses";
 const string NOT_FOUND = "Not Found";
 const string BAD_REQUEST = "Bad Request";
-const string PERMISSION_DENIED = "Permission denied";
+const string PERMISSION_DENIED = "Permission Denied";
 const string ZERO_STRING = "0";
+const string NEW_POST = "New Post";
+const string NEW_COURSE_OFFER = "New Course Offering";
+const string NEW_GET_COURSE = "Get Course";
+const string NEW_DELETE_COURSE = "Delete Course";
 const char COMMA = ',';
 const char DOT = '.';
 const char SLASH = '/';
@@ -67,5 +71,6 @@ const int GET_COURSE_MODE_SIZE_FIRST = 3;
 const int GET_COURSE_MODE_SIZE_SECOND = 5;
 const int PUT_COURSE_MODE_SIZE = 5;
 const int GET_MY_COURSE_MODE_SIZE = 3;
+const int NOTIFICATION_MODE_SIZE = 3;
 
 #endif
