@@ -1,6 +1,6 @@
 
 CXX = g++
-CXXFLAGS = -std=c++20 -Wall -Wextra -Wall -I./include -fsanitize=address -fsanitize=undefined
+CXXFLAGS = -std=c++20 -Wall -Wextra -Wall -I./include
 
 INCLUDEDIR = include
 LFLAGS = -L./files
