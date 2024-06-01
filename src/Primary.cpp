@@ -21,68 +21,30 @@ void notSignInSplitting(string &result, char character) {
     result += character;
 }
 
-bool hasQuotion(string inputString) {
-    for (auto &character : inputString){
-        if (character == QUOTION) {
-            return true;
-        }
-    }
-    return false;
-}
-
-void handleQoution(int& i, string& result, vector<string>& splitted, string inputString, int& check) {
-    for(i; i < inputString.size(); i++) {
-        notSignInSplitting(result, inputString[i]);
-        if(inputString[i] == QUOTION) {
-            check++;
-            if((int) result.size() != 1) {
-                signInSplitting(result, splitted);
-                break;
-            }
-        }
-    }
-}
-
-vector<string> splitInQuotionMode(string inputString) {
-    int check = 0;
+vector<string> splitByInputSign(string inputString, char sign) {
     string result = NULL_STRING;
     vector<string> splitted;
-    for(int i = 0; i < inputString.size(); i++) {
-        if (inputString[i] == SPACE) {
-            if(result != NULL_STRING) signInSplitting(result, splitted);
-        }
-        else if(inputString[i] != QUOTION) {
+    bool flag = false;
+    for (int i = 0; i < (int) inputString.size(); i++)
+    {
+        if (inputString[i] != sign || flag) {
             notSignInSplitting(result, inputString[i]);
         }
         else {
-            if(result != NULL_STRING) {
-                splitted.clear();
-                return splitted;
+            signInSplitting(result, splitted);
+        }
+        if (inputString[i] == QUOTION) {
+            if (flag) {
+                flag = false;
             }
-            handleQoution(i, result, splitted, inputString, check);
+            else {
+                flag = true;
+            }
         }
     }
-
-    if(check != 4) splitted.clear();
-    if(result != NULL_STRING) signInSplitting(result, splitted);
-    return splitted;
-}
-
-vector<string> splitByInputSign(string inputString, char sign) {
-    if(hasQuotion(inputString)) {
-        return splitInQuotionMode(inputString);
+    if (inputString.back() != sign){
+        splitted.push_back(result);
     }
-    string result = NULL_STRING;
-    vector<string> splitted;
-    for (auto &character : inputString){
-        if (character == sign) {
-            if(result != NULL_STRING) signInSplitting(result, splitted);
-        }
-        else {
-            notSignInSplitting(result, character);
-        }
-    }
-    if(result != NULL_STRING) signInSplitting(result, splitted);
     return splitted;
 }
 
@@ -93,7 +55,6 @@ bool isQuestionMark(string input_line) {
     else {
         return false;
     }
-
 }
 
 bool isNumber(string post_id) {

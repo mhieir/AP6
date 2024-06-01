@@ -17,10 +17,10 @@ void University::runPutCourse() {
     else if(!isNumber(input_line[4])) {
         throw runtime_error(BAD_REQUEST);
     }
-    else if(stoi(input_line[4]) == 0) {
+    else if(stoi(input_line[4]) == ZERO) {
         throw runtime_error(BAD_REQUEST);
     }
-    else if(stoi(input_line[4]) >= course_offer_id ) {
+    else if(stoi(input_line[4]) >= course_offer_id) {
         throw runtime_error(NOT_FOUND);
     }
     else if(user->getSemester() < all_course_offers[stoi(input_line[4]) - 1]->getPrerequisite()) {
@@ -34,7 +34,8 @@ void University::runPutCourse() {
     }
     else {
         user->addCourse(all_course_offers[stoi(input_line[4]) - 1]);
-        user->shareNotification(user->getId() + SPACE + user->getName() + COLON + SPACE + NEW_GET_COURSE + '\n');
+        all_course_offers[stoi(input_line[4]) - 1]->addStudent(user->getId());
+        user->shareNotification(user->getId() + SPACE + user->getName() + COLON + SPACE + NEW_GET_COURSE + END_LINE);
         throw runtime_error(OK);
     }
 }

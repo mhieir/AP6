@@ -36,6 +36,13 @@ private:
     People* user;
     int course_offer_id;
 
+    void runCloseTAForm();
+    void validInputTAForm();
+    void runPostTAForm();
+    void makeMessageTextCoursePost();
+    void addNotificationCoursePost(int index, string notification_line);
+    void runCoursePost();
+    void runAddProfile();
     void runNotification();
     void runGetMyCourse();
     void runDeleteCourse();
@@ -66,35 +73,19 @@ private:
     void runLogout();
     void runConnect();
     void runPersonalPage();
-    bool checkValidPostNumber(string post_id);
     void handleInput();
     void handleGetRequest();
     void handlePostRequest();
-    void handlePutRequest() {};
+    void handlePutRequest();
     void handleDeleteRequest();
     void showAllCourseOffers();
     void showOneCourseOffers(int index);
     void catchError(runtime_error& ex);
+    void askProfessorForTA(int index);
+    void askQuestion(string output_line);
+    void runTARequest();
+    void validInputTARequest();
 
 };
 
 #endif
-
-// 
-
-// POST login ? id 0 password UT_account
-// OK
-// POST course_offer ? course_id 1 professor_id 810420432 capacity 70 time Sunday:13-15 exam_date 1403/4/4 class_number 2
-// OK
-// POST course_offer ? course_id 1 professor_id 810420432 capacity 40 time Saturday:13-15 exam_date 1403/4/4 class_number 2
-// OK
-// POST logout ?
-// OK
-// POST login ? password ImtheproblemItsme id 810102612
-// OK
-// PUT my_courses ? id 1
-// fucl
-// Bad Request
-// PUT my_courses ? id 2
-// fucl
-// Bad Request

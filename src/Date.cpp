@@ -5,10 +5,10 @@ Date::Date(string complete_date) : complete_date(complete_date) {
     string result_year = NULL_STRING, result_month = NULL_STRING, result_day = NULL_STRING;
     bool flag_year = false, flag_month = false;
     for(char c : complete_date) {
-        if(c == '/' and !flag_year) {
+        if(c == SLASH and !flag_year) {
             flag_year = true;
         }
-        else if(c == '/' and !flag_month) {
+        else if(c == SLASH and !flag_month) {
             flag_month = true;
         }
         else if(!flag_year) {

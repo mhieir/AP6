@@ -3,7 +3,7 @@
 
 University::University() {
     user = nullptr;
-    course_offer_id = 1;
+    course_offer_id = START_ID;
 }
 
 void University::addMajor(string id, string name) {
@@ -23,7 +23,7 @@ void University::addProfessor(string id, string name, Major* major, string strin
 }
 
 void University::catchError(runtime_error& ex) {
-    output.push_back(string(ex.what()) + "\n");
+    output.push_back(string(ex.what()) + END_LINE);
 }
 
 bool University::checkValidPassword(string id, string password) {
@@ -43,8 +43,6 @@ bool University::isStudent() {
         return false;
     }
 }
-
-
 
 bool University::checkLogin() {
     if(user != nullptr) {
@@ -145,21 +143,54 @@ void University::showOneCourseOffers(int index) {
     output.push_back(people[findPeopleIndexById(all_course_offers[index]->getProfessorId())]->getName() + SPACE);
     output.push_back(all_course_offers[index]->getTime()  + SPACE);
     output.push_back(all_course_offers[index]->getExamTime() + SPACE);
-    output.push_back(to_string(all_course_offers[index]->getClassNumber()) + "\n");
-
+    output.push_back(to_string(all_course_offers[index]->getClassNumber()) + END_LINE);
 }
+
+void University::addNotificationCoursePost(int index, string notification_line) {
+    for(int i = 0; i < all_course_offers[index]->students.size(); i++) {
+        people[findPeopleIndexById(all_course_offers[index]->students[i])]->addNotification(notification_line);
+    }
+    if(user->getPeopleType() != _PROFESSOR) {
+        people[findPeopleIndexById(all_course_offers[index]->professor_id)]->addNotification(notification_line);
+    }
+    for(int i = 0; i < all_course_offers[index]->ta_ids.size(); i++) {
+        if(user->getId() == all_course_offers[index]->ta_ids[i]) {
+            continue;
+        }
+        else {
+            people[findPeopleIndexById(all_course_offers[index]->ta_ids[i])]->addNotification(notification_line);
+        }
+    }
+}
+
 
 void University::showAllCourseOffers() {
     for(int i = 0; i < all_course_offers.size(); i++) {
         output.push_back(to_string(all_course_offers[i]->getCourseOfferId()) + SPACE);
         output.push_back(all_course_offers[i]->getName()  + SPACE);
         output.push_back(to_string(all_course_offers[i]->getCapacity()) + SPACE);
-        output.push_back(people[findPeopleIndexById(all_course_offers[i]->getProfessorId())]->getName() + "\n");
+        output.push_back(people[findPeopleIndexById(all_course_offers[i]->getProfessorId())]->getName() + END_LINE);
     }
 }
 
 Major* University::getMajorById(int index) {
     return majors[index];
+}
+
+void University::askQuestion(string output_line) {
+    string enter;
+    while(enter != ACCEPT and enter != REJECT) {
+        output.push_back(output_line);
+        getline(cin, enter);
+        output.push_back(enter + END_LINE);
+    }
+}
+
+void University::askProfessorForTA(int index) {
+    output.push_back(TA_FORM_FIRST + to_string(all_course_offers[index]->getRequestedTA().size()) + TA_FORM_SECOND + END_LINE);
+    for(int i = 0; i < all_course_offers[index]->getRequestedTA().size(); i++) {
+        askQuestion(all_course_offers[index]->getRequestedTA()[i]);
+    }
 }
 
 void University::handlePostRequest() {
@@ -177,6 +208,15 @@ void University::handlePostRequest() {
     }
     else if(input_line[1] == COURSE_OFFER) {
         runShareCourse();
+    }
+    else if(input_line[1] == PROFILE_PHOTO) {
+        runAddProfile();
+    }
+    else if(input_line[1] == COURSE_POST) {
+        runCoursePost();
+    }
+    else if(input_line[1] == TA_FORM) {
+        runPostTAForm();
     }
     else {
         throw runtime_error(NOT_FOUND);
@@ -217,6 +257,16 @@ void University::handleDeleteRequest() {
     }
 }
 
+void University::handlePutRequest() {
+    if(input_line[1] == MY_COURSES) {
+        runPutCourse();
+    }
+    else {
+        throw runtime_error(NOT_FOUND);
+    }
+}
+
+
 void University::handleInput() {
     if(input_line[0] == GET) {
         handleGetRequest();
@@ -224,8 +274,8 @@ void University::handleInput() {
     else if(input_line[0] == POST) {
         handlePostRequest();
     }
-    else if(input_line[0] == PUT and input_line[1] == MY_COURSES) {
-        runPutCourse();
+    else if(input_line[0] == PUT) {
+        handlePutRequest();
     }
     else if(input_line[0] == DELETE) {
         handleDeleteRequest();
@@ -246,7 +296,7 @@ void University::makeDefaultConnections() {
 void University::run(string input_string) {
     input_line = splitByInputSign(input_string, SPACE);
     try {
-        if(input_line.size() > 2) {
+        if(input_line.size() > MIN_INPUT_SIZE) {
             handleInput();
         }
         else {
@@ -256,7 +306,3 @@ void University::run(string input_string) {
         catchError(e);
     }
 }
-
-
-// POST course_offer ? course_id 1 professor_id 810420432 capacity 70 time Sunday:13-15 exam_date 1403/4/4 class_number 2
-// POST course_offer ? course_id 1 professor_id 810420432 capacity 40 time Saturday:13-15 exam_date 1403/4/4 class_number 2

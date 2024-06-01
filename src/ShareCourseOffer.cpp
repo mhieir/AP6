@@ -29,7 +29,7 @@ void University::shareCourseModeInput() {
     if(!isNumber(course_id) || !isNumber(professor_id) || !isNumber(capacity) || !isNumber(class_number)) {
         throw runtime_error(BAD_REQUEST);
     }
-    else if(stoi(course_id) == 0 || stoi(professor_id) == 0 || stoi(capacity) == 0 || stoi(class_number) == 0) {
+    else if(stoi(course_id) == ZERO || stoi(professor_id) == ZERO || stoi(capacity) == ZERO || stoi(class_number) == ZERO) {
         throw runtime_error(BAD_REQUEST);
     }
     else if(!checkValidId(professor_id) || !checkValidCourse(course_id)) {
@@ -53,7 +53,7 @@ void University::shareCourseModeInput() {
          new_time, new_date, stoi(class_number), courses[course_index]->getName(), courses[course_index]->getCredit(),
          courses[course_index]->getPrerequisite(), courses[course_index]->getMajorsId());
         people[professor_index]->addCourse(new_course);
-        user->shareNotification(people[professor_index]->getId() + SPACE + people[professor_index]->getName() + COLON + SPACE + NEW_COURSE_OFFER + '\n');
+        user->shareNotification(people[professor_index]->getId() + SPACE + people[professor_index]->getName() + COLON + SPACE + NEW_COURSE_OFFER + END_LINE);
         all_course_offers.push_back(new_course);
         course_offer_id++;
         throw runtime_error(OK);
@@ -77,4 +77,3 @@ void University::runShareCourse() {
         shareCourseModeInput();
     }
 }
-

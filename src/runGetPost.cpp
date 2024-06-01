@@ -15,7 +15,7 @@ void University::validGetPostInput() {
     if(!isNumber(id) || !isNumber(post_id)) {
         throw runtime_error(BAD_REQUEST);
     }
-    else if(stoi(post_id) == 0) {
+    else if(stoi(post_id) == ZERO) {
         throw runtime_error(BAD_REQUEST);
     }
     else if(!checkValidId(id) || !checkValidPostNumberById(post_id, id)) {

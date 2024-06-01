@@ -6,7 +6,7 @@
 #include "University.hpp"
 
 class Interface {
-public: 
+public:
     Interface(char *argv[]);
     ~Interface() {};
     void run();

@@ -2,7 +2,8 @@
 
 People::People(string id, string name, Major* major, string password, PeopleType people_type) :
 Entity(id, name), major(major), password(password), people_type(people_type) {
-    post_number = 1;
+    profile_image = NULL_STRING;
+    cloud = new Cloud();
 }
 
 bool People::inConnection(string new_id) {
@@ -12,36 +13,8 @@ bool People::inConnection(string new_id) {
     return false;
 }
 
-void People::addPost(string title, string message) {
-    posts.push_back(new Post(title, message, post_number));
-    post_number++;
-}
-
-void People::removePost(int post_id) {
-    for(int i = 0; i < (int) posts.size(); i++) {
-        if(posts[i]->getId() == post_id) {
-            posts.erase(posts.begin() + i);
-            return;
-        }
-    }
-}
-
-bool People::isInPost(int post_id) {
-    for(int i = 0; i < (int) posts.size(); i++) {
-        if(posts[i]->getId() == post_id) {
-            return true;
-        }
-    }
-    return false;
-}
-
-void People::showOnePost(vector<string>& output, int post_id) {
-    for(int i = 0; i < (int) posts.size(); i++) {
-        if(posts[i]->getId() == post_id) {
-            output.push_back(to_string(posts[i]->getId()) + SPACE + posts[i]->getTitle() + SPACE +  posts[i]->getMessage());
-        }
-    }
-    output.push_back("\n");
+void People::addProfile(string new_profile_image) {
+    profile_image = new_profile_image;
 }
 
 bool People::validCourseTime(Time new_time) {
@@ -78,14 +51,9 @@ void People::showOfferCourses(vector<string>& output) {
     if(!course_offers.empty()) {
         output.push_back(course_offers.back()->getName());
     }
-    output.push_back("\n");
+    output.push_back(END_LINE);
 }
 
-void People::showPosts(vector<string>& output) {
-    for(int i = (int) posts.size() - 1; 0 <= i; i--) {
-        output.push_back(to_string(posts[i]->getId()) + SPACE + posts[i]->getTitle() + '\n');
-    }
-}
 
 bool People::hasCourseOfferById(int course_id) {
     for(int i = 0; i < course_offers.size(); i++) {
@@ -110,7 +78,7 @@ void People::showCourses(vector<string>& output, vector<People*> people){
         output.push_back(to_string(course_offers[i]->getCapacity()) + SPACE);
         output.push_back(getProfessorName(people, course_offers[i]->getProfessorId()) + SPACE);
         output.push_back(course_offers[i]->getTime() + SPACE + course_offers[i]->getExamTime() + SPACE);
-        output.push_back(to_string(course_offers[i]->getClassNumber()) + "\n");
+        output.push_back(to_string(course_offers[i]->getClassNumber()) + END_LINE);
     }
 }
 

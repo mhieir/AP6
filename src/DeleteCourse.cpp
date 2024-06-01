@@ -28,7 +28,7 @@ void University::runDeleteCourse() {
     }
     else {
         user->removeCourse(all_course_offers[stoi(input_line[4]) - 1]->getCourseOfferId());
-        user->shareNotification(user->getId() + SPACE + user->getName() + COLON + SPACE + NEW_DELETE_COURSE + '\n');
+        user->shareNotification(user->getId() + SPACE + user->getName() + COLON + SPACE + NEW_DELETE_COURSE + END_LINE);
         throw runtime_error(OK);
     }
 }

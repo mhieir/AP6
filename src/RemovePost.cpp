@@ -17,7 +17,7 @@ void University::runRemovePost() {
     else if(!isNumber(input_line[4])) {
         throw runtime_error(BAD_REQUEST);
     }
-    else if(stoi(input_line[4]) == 0) {
+    else if(stoi(input_line[4]) == ZERO) {
         throw runtime_error(BAD_REQUEST);
     }
     else if(!user->isInPost(stoi(input_line[4]))) {
