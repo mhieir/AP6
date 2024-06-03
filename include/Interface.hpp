@@ -14,6 +14,7 @@ protected:
 private:
     University* university;
 
+    vector<bool> showExtraOutput(vector<string> outputs);
     void showOutput(vector<string> outputs);
     void makeMajorString(vector<string> major_string);
     void makeStudentString(vector<string> student_string);

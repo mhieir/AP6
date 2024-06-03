@@ -42,8 +42,8 @@ void University::makeMessageTextCoursePost() {
     }
     else {
         if(image_address == DEFINE_STRING) image_address = NULL_STRING;
-        all_course_offers[stoi(input_line[4]) - 1]->addPost(title, message, image_address, user->getName(), _NORMAL, NULL_STRING);
-        addNotificationCoursePost(stoi(input_line[4]) - 1, id + SPACE + all_course_offers[stoi(input_line[4]) - 1]->getName() + COLON + SPACE + NEW_COURSE_POST);
+        all_course_offers[stoi(id) - 1]->addPost(title, message, image_address, user->getName(), _NORMAL, NULL_STRING, ZERO);
+        addNotificationCoursePost(stoi(id) - 1, id + SPACE + all_course_offers[stoi(id) - 1]->getName() + COLON + SPACE + NEW_COURSE_POST + END_LINE);
        throw runtime_error(OK);
 
     }

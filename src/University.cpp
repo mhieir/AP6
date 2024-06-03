@@ -4,6 +4,8 @@
 University::University() {
     user = nullptr;
     course_offer_id = START_ID;
+    current_course_offer = INVALID;
+    extra_output.clear();
 }
 
 void University::addMajor(string id, string name) {
@@ -146,19 +148,32 @@ void University::showOneCourseOffers(int index) {
     output.push_back(to_string(all_course_offers[index]->getClassNumber()) + END_LINE);
 }
 
+void University::showOneCourseOffersForChannel(int index) {
+    output.push_back(to_string(all_course_offers[index]->getCourseOfferId()) + SPACE);
+    output.push_back(all_course_offers[index]->getName() + SPACE);
+    output.push_back(to_string(all_course_offers[index]->getCapacity()) + SPACE);
+    output.push_back(people[findPeopleIndexById(all_course_offers[index]->getProfessorId())]->getName() + SPACE);
+    output.push_back(all_course_offers[index]->getTime()  + SPACE);
+    output.push_back(all_course_offers[index]->getExamTime() + SPACE);
+    output.push_back(to_string(all_course_offers[index]->getClassNumber()) + END_LINE);
+
+    all_course_offers[index]->showPostsCourseChannel(output);
+
+}
+
 void University::addNotificationCoursePost(int index, string notification_line) {
-    for(int i = 0; i < all_course_offers[index]->students.size(); i++) {
-        people[findPeopleIndexById(all_course_offers[index]->students[i])]->addNotification(notification_line);
+    for(int i = 0; i < all_course_offers[index]->getStudents().size(); i++) {
+        people[findPeopleIndexById(all_course_offers[index]->getStudents()[i])]->addNotification(notification_line);
     }
     if(user->getPeopleType() != _PROFESSOR) {
-        people[findPeopleIndexById(all_course_offers[index]->professor_id)]->addNotification(notification_line);
+        people[findPeopleIndexById(all_course_offers[index]->getProfessorId())]->addNotification(notification_line);
     }
-    for(int i = 0; i < all_course_offers[index]->ta_ids.size(); i++) {
-        if(user->getId() == all_course_offers[index]->ta_ids[i]) {
+    for(int i = 0; i < all_course_offers[index]->getTaIds().size(); i++) {
+        if(user->getId() == all_course_offers[index]->getTaIds()[i]) {
             continue;
         }
         else {
-            people[findPeopleIndexById(all_course_offers[index]->ta_ids[i])]->addNotification(notification_line);
+            people[findPeopleIndexById(all_course_offers[index]->getTaIds()[i])]->addNotification(notification_line);
         }
     }
 }
@@ -177,20 +192,37 @@ Major* University::getMajorById(int index) {
     return majors[index];
 }
 
-void University::askQuestion(string output_line) {
-    string enter;
-    while(enter != ACCEPT and enter != REJECT) {
-        output.push_back(output_line);
-        getline(cin, enter);
-        output.push_back(enter + END_LINE);
+void University::makeExtraOutput(vector<string> requested_TAs, int index) {
+    for(int i = 0; i < requested_TAs.size(); i++) {
+        extra_output.push_back(requested_TAs[i] + SPACE + people[findPeopleIndexById(requested_TAs[i])]->getName() + SPACE + to_string(people[findPeopleIndexById(requested_TAs[i])]->getSemester()) + COLON + SPACE);
     }
+    current_course_offer = index;
 }
 
 void University::askProfessorForTA(int index) {
-    output.push_back(TA_FORM_FIRST + to_string(all_course_offers[index]->getRequestedTA().size()) + TA_FORM_SECOND + END_LINE);
-    for(int i = 0; i < all_course_offers[index]->getRequestedTA().size(); i++) {
-        askQuestion(all_course_offers[index]->getRequestedTA()[i]);
+    current_course_offer = index;
+    output.push_back(TA_FORM_FIRST + to_string(all_course_offers[index]->getRequestedTA().size()) + SPACE + TA_FORM_SECOND + END_LINE);
+    makeExtraOutput(all_course_offers[index]->getRequestedTA(), index);
+}
+
+void University::cleanCloseForm() {
+    if(current_course_offer == INVALID) {
+        return;
     }
+    for(int i = 0; i < all_course_offers[current_course_offer]->getRequestedTA().size(); i++) {
+        string ta_id = all_course_offers[current_course_offer]->getRequestedTA()[i];
+        if(closeFormResult[i]) {
+            all_course_offers[current_course_offer]->addTA(ta_id);
+            people[findPeopleIndexById(ta_id)]->addNotification(to_string(current_course_offer + 1) + SPACE + all_course_offers[current_course_offer]->getName() + ACCEPT_NOTIFICAION + END_LINE);
+        }
+        else {
+            people[findPeopleIndexById(ta_id)]->addNotification(to_string(current_course_offer + 1) + SPACE + all_course_offers[current_course_offer]->getName() + REJECT_NOTIFICAION + END_LINE);
+        }
+    }
+    all_course_offers[current_course_offer]->cleanTARequested();
+    current_course_offer = INVALID;
+    closeFormResult.clear();
+    extra_output.clear();
 }
 
 void University::handlePostRequest() {
@@ -218,6 +250,12 @@ void University::handlePostRequest() {
     else if(input_line[1] == TA_FORM) {
         runPostTAForm();
     }
+    else if(input_line[1] == TA_REQUEST) {
+        runTARequest();
+    }
+    else if(input_line[1] == CLOSE_TA_FORM) {
+        runCloseTAForm();
+    }
     else {
         throw runtime_error(NOT_FOUND);
     }
@@ -238,6 +276,12 @@ void University::handleGetRequest() {
     }
     else if(input_line[1] == COURSES) {
         runGetCourse();
+    }
+    else if(input_line[1] == COURSE_CHANNEL) {
+        runGetCourseChannel();
+    }
+    else if(input_line[1] == COURSE_POST) {
+        runGetPostCourseChannel();
     }
     else {
         throw runtime_error(NOT_FOUND);

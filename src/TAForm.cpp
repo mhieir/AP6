@@ -33,7 +33,7 @@ void University::validInputTAForm() {
         user->addPost(TA_FORM_FOR + all_course_offers[stoi(course_id) - 1]->getName() + SPACE_COURSE, message,
          NULL_STRING, user->getName(), _TA_FORM, course_id + SPACE + all_course_offers[stoi(course_id) - 1]->getName() + SPACE  +
          to_string(all_course_offers[stoi(course_id) - 1]->getCapacity()) + SPACE + user->getName() + SPACE + all_course_offers[stoi(course_id) - 1]->getTime() + SPACE +
-         all_course_offers[stoi(course_id) - 1]->getExamTime() + SPACE + to_string(all_course_offers[stoi(course_id) - 1]->getClassNumber()));
+         all_course_offers[stoi(course_id) - 1]->getExamTime() + SPACE + to_string(all_course_offers[stoi(course_id) - 1]->getClassNumber()), stoi(course_id));
         user->shareNotification(user->getId() + SPACE + user->getName() + COLON + SPACE + NEW_FORM + END_LINE);
         throw runtime_error(OK);
     }

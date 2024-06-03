@@ -22,7 +22,7 @@ void University::validGetPostInput() {
         throw runtime_error(NOT_FOUND);
     }
     else {
-        people[findPeopleIndexById(input_line[4])]->getPost(output, stoi(post_id));
+        people[findPeopleIndexById(id)]->getPost(output, stoi(post_id));
     }
 }
 

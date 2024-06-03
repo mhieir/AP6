@@ -24,7 +24,11 @@ public:
     void addCourse(string id, string name, int credit, int prerequisite, vector<string> majors_id);
     vector<string> getOutput() {return output;}
     void cleanOutput() {output.clear();}
+    vector<string> getExtraOutput() {return extra_output;}
+    void cleanExtraOutput() {extra_output.clear();}
     void makeDefaultConnections();
+    void getExtraInput(vector<bool> result) {closeFormResult = result;}
+    void cleanCloseForm();
 protected:
 private:
     vector<Major*> majors;
@@ -33,9 +37,15 @@ private:
     vector<string> input_line;
     vector<CourseOffer*> all_course_offers;
     vector<string> output;
+    vector<string> extra_output;
+    vector<bool> closeFormResult;
     People* user;
     int course_offer_id;
+    int current_course_offer;
 
+    void runGetCourseChannel();
+    void removeTAForm();
+    void makeExtraOutput(vector<string> requested_TAs, int index);
     void runCloseTAForm();
     void validInputTAForm();
     void runPostTAForm();
@@ -82,10 +92,11 @@ private:
     void showOneCourseOffers(int index);
     void catchError(runtime_error& ex);
     void askProfessorForTA(int index);
-    void askQuestion(string output_line);
     void runTARequest();
     void validInputTARequest();
-
+    void validGetCoursePostInput();
+    void showOneCourseOffersForChannel(int index);
+    void runGetPostCourseChannel();
 };
 
 #endif

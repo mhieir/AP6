@@ -24,7 +24,7 @@ void University::makeMessageText() {
     }
     else {
         if(image_address == DEFINE_STRING) image_address = NULL_STRING;
-        user->addPost(title, message, image_address, NULL_STRING, _NORMAL, NULL_STRING);
+        user->addPost(title, message, image_address, NULL_STRING, _NORMAL, NULL_STRING, 0);
         user->shareNotification(user->getId() + SPACE + user->getName() + COLON + SPACE + NEW_POST + END_LINE);
         throw runtime_error(OK);
     }

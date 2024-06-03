@@ -6,7 +6,7 @@
 
 class Post {
 public:
-    Post(string title, string message, int id, string image_address, string author, PostType post_type, string extra);
+    Post(string title, string message, int id, string image_address, string author, PostType post_type, string extra, int course_id);
     ~Post() {};
     string getTitle() {return title;}
     string getAuthor() {return author;}
@@ -15,11 +15,12 @@ public:
     string getAddress() {return image_address;}
     PostType getPostType() {return post_type;}
     string getExtra() {return extra;}
+    int getCourseId() {return course_id;}
 protected:
 private:
     string title, message, image_address, author, extra;
     PostType post_type;
-    int id;
+    int id, course_id;
     bool available;
 };
 

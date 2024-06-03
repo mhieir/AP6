@@ -44,3 +44,19 @@ bool CourseOffer::isProfessor(string request_professor_id) {
     }
     return false;
 }
+
+bool CourseOffer::isStudent(string request_student_id) {
+    for(int i = 0; i < (int) students.size(); i++) {
+        if(students[i] == request_student_id) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool CourseOffer::isInCourse(string id) {
+    if(isStudent(id) or isProfessor(id) or isTA(id)) {
+        return true;
+    }
+    return false;
+}

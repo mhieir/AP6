@@ -43,12 +43,35 @@ void Interface::showOutput(vector<string> outputs) {
     }
 }
 
+vector<bool> Interface::showExtraOutput(vector<string> outputs) {
+    vector<bool> result;
+    result.clear();
+    for(string output : outputs) {
+        string input_word = NULL_STRING;
+        while(true) {
+            cout << output;
+            getline(cin, input_word);
+            if(input_word == ACCEPT) {
+                result.push_back(true);
+                break;
+            }
+            else if(input_word == REJECT){
+                result.push_back(false);
+                break;
+            }
+        }
+    }
+    return result;
+}
+
 void Interface::run() {
     university->makeDefaultConnections();
     string line;
     while (getline(cin, line)) {
         university->run(line);
         showOutput(university->getOutput());
+        university->getExtraInput(showExtraOutput(university->getExtraOutput()));
+        university->cleanCloseForm();
         university->cleanOutput();
     }
 }

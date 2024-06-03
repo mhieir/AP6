@@ -26,17 +26,25 @@ public:
     bool isProfessor(string request_professor_id);
     void showOnePost(vector<string>& output, int post_id) {cloud->showOnePost(output, post_id);}
     void showPosts(vector<string>& output) {cloud->showPosts(output);}
-    void addPost(string title, string message, string image_address, string author, PostType post_type, string extra) {cloud->addPost(title, message, image_address, author, post_type, extra);}
+    void addPost(string title, string message, string image_address, string author, PostType post_type, string extra, int course_id) {cloud->addPost(title, message, image_address, author, post_type, extra, course_id);}
+    void removePost(int post_id) {cloud->removePost(post_id);}
+    bool isStudent(string request_student_id);
     bool isInPost(int post_id) {return cloud->isInPost(post_id);}
     void addRequestedTA(string student_id);
     bool getOpenForm() {return openForm;}
     void changeStatusTAForm();
+    void showOnePostCourseChannel(vector<string>& output, int post_id) {cloud->showOnePostCourseChannel(output, post_id);}
+    void showPostsCourseChannel(vector<string>& output) {cloud->showPostsCourseChannel(output);}
+    bool isInCourse(string id);
+    vector<string> getRequestedTA() {return requested_ta;}
+    vector<string> getStudents() {return students;}
+    vector<string> getTaIds() {return ta_ids;}
+    void cleanTARequested() {requested_ta.clear();}
+protected:
+    bool openForm;
     string professor_id;
     vector<string> ta_ids;
     vector<string> students;
-    vector<string> getRequestedTA() {return requested_ta;}
-protected:
-    bool openForm;
     vector<string> requested_ta;
     Time time;
     Date exam_time;

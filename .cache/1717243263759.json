@@ -1,0 +1,1 @@
+{"date":"2024-06-01T12:01:02.332Z","courseId":"17","assignment":"AP-Spring03-CA6","trace":{"version":3,"content":"cid,name,credit,prerequisite,majors_id\n1,Advanced Programming,3,1,1;2\n2,Operating System,3,5,1\n","filename":"/Users/mahdis/Desktop/AP/AP6/courses.csv","identifier":"Text Change","lineCount":4,"languageId":"plaintext"},"failed":false}

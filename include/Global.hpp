@@ -15,7 +15,9 @@ enum PostType {
     _TA_FORM
 };
 
+const string COURSE_CHANNEL = "course_channel";
 const string NULL_STRING = "";
+const string CLOSE_TA_FORM = "close_ta_form";
 const string DEFINE_STRING = "-1";
 const string UT_ACCOUNT = "UT_account";
 const string NEW_COURSE_POST = "New Course Post";
@@ -44,7 +46,6 @@ const string MESSAGE = "message";
 const string PERSONAL_PAGE = "personal_page";
 const string POST_ID = "post_id";
 const string CONNECT = "connect";
-const string COURSE_POST = "course_post";
 const string NOTIFICATION = "notification";
 const string COURSE_OFFER = "course_offer";
 const string COURSE_ID = "course_id";
@@ -68,6 +69,11 @@ const string IMAGE = "image";
 const string PHOTO = "photo";
 const string TA_FORM_FIRST = "We have received ";
 const string TA_FORM_SECOND = "requests for the teaching assistant position";
+const string FORM_ID = "form_id";
+const string TA_REQUEST = "ta_request";
+const string COURSE_POST = "course_post";
+const string ACCEPT_NOTIFICAION = ": Your request to be a teaching assistant has been accepted.";
+const string REJECT_NOTIFICAION = ": Your request to be a teaching assistant has been rejected.";
 const char COMMA = ',';
 const char DOT = '.';
 const char SLASH = '/';
@@ -78,6 +84,7 @@ const char DASH = '-';
 const char QUOTION = '\"';
 const int MAX_CHAR = 500;
 const int LOGGED_OUT = -1;
+const int INVALID = -1;
 const int ZERO = 0;
 const int MIN_INPUT_SIZE = 2;
 const int LOGIN_MODE_SIZE = 7;
@@ -101,5 +108,7 @@ const int NOTIFICATION_MODE_SIZE = 3;
 const int POST_TA_FORM_MODE_SIZE = 7;
 const int CLOSE_TA_FORM_MODE_SIZE = 5;
 const int TA_REQUEST_MODE_SIZE = 7;
+const int GET_COURSE_CHANNEL_SIZE = 5;
+const int GET_COURSE_POST_SIZE = 7;
 
 #endif
