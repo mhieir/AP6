@@ -5,13 +5,18 @@ CXXFLAGS = -std=c++20 -Wall -Wextra -Wall -I./include
 INCLUDEDIR = include
 LFLAGS = -L./files
 SRCDIR = src
+SERVERDIR = server
+UTILSDIR = utils
 OBJDIR = obj
 BINDIR = .
 EXECUTABLE = $(BINDIR)/utms.out
 MEDIA_PATH = ./files/
 
-SOURCES := $(wildcard $(SRCDIR)/*.cpp)
+SOURCES := $(shell find $)
 OBJECTS := $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SOURCES))
+
+SRCS=$(shell find ${SRC_DIR} -type f \( -name "*.cpp" \)) $(shell find ${SERVERDIR} -type f \( -name "*.cpp" \)) $(shell find ${UTILSDIR} -type f \( -name "*.cpp" \))
+HEADERS=$(shell find ${SRC_DIR} -type f \( -name "*.hpp" \))
 
 all: $(EXECUTABLE)
 

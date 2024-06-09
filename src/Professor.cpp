@@ -1,7 +1,20 @@
 #include "Professor.hpp"
 
-Professor::Professor(string id, string name, Major* major, string string_position, string password):
-People(id, name, major, password, _PROFESSOR), string_position(string_position) {}
+Professor::Professor(string id, string name, Major* major, string _string_position, string password):
+People(id, name, major, password, _PROFESSOR) {
+    if(_string_position == "instructor") {
+        string_position = "Instructor";
+    }
+    else if(_string_position == "assistant professor") {
+        string_position = "Assistant Professor";
+    }
+    else if(_string_position == "associate professor") {
+        string_position = "Associate Professor";
+    }
+    else if(_string_position == "professor") {
+        string_position = "Professor";
+    }
+}
 
 void Professor::personalPage(vector<string>& output) {
     output.push_back(name + SPACE + major->getName() + SPACE + string_position + SPACE);
