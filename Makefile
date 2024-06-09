@@ -1,31 +1,30 @@
-
 CXX = g++
-CXXFLAGS = -std=c++20 -Wall -Wextra -Wall -I./include
+CXXFLAGS = -std=c++11 -Wall -fsanitize=address -fsanitize=undefined -pedantic
+BUILD_DIR = build
+OUT_EXE = myserver.out
 
-INCLUDEDIR = include
-LFLAGS = -L./files
-SRCDIR = src
-SERVERDIR = server
-UTILSDIR = utils
-OBJDIR = obj
-BINDIR = .
-EXECUTABLE = $(BINDIR)/utms.out
-MEDIA_PATH = ./files/
+ifeq ($(OS),Windows_NT)
+	LDLIBS += -l Ws2_32
+endif
 
-SOURCES := $(shell find $)
-OBJECTS := $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SOURCES))
+SRCS := $(wildcard code/src/*.cpp) $(wildcard utils/*.cpp) $(wildcard server/*.cpp)
+OBJS := $(patsubst %.cpp,$(BUILD_DIR)/%.o,$(SRCS))
 
-SRCS=$(shell find ${SRC_DIR} -type f \( -name "*.cpp" \)) $(shell find ${SERVERDIR} -type f \( -name "*.cpp" \)) $(shell find ${UTILSDIR} -type f \( -name "*.cpp" \))
-HEADERS=$(shell find ${SRC_DIR} -type f \( -name "*.hpp" \))
+INC_DIRS := code/include utils server
+INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
-all: $(EXECUTABLE)
+all: $(BUILD_DIR) $(OUT_EXE)
 
-$(EXECUTABLE): $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $@ $^ $(LFLAGS)
+$(OUT_EXE): $(OBJS)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $@
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.cpp $(wildcard $(INCLUDEDIR)/*.hpp)
-	mkdir -p $(OBJDIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@ -I$(MEDIA_PATH)
+$(BUILD_DIR)/%.o: %.cpp
+	mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) $(INC_FLAGS) -c $< -o $@
 
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
+
+.PHONY: clean
 clean:
-	rm -rf $(OBJDIR)/*.o $(EXECUTABLE)
+	rm -rf $(BUILD_DIR) *.o *.out
