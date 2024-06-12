@@ -15,13 +15,13 @@ class University {
 public:
     University(char **argv);
     ~University() {};
+    int findPeopleIndexById(string id);
     void addMajor(string id, string name);
     void addStudent(string id, string name, Major* major, int semester, string password);
     void addProfessor(string id, string name, Major* major, string string_position, string password);
     int findMajor(string id);
     Major* getMajorById(int index);
     void addCourse(string id, string name, int credit, int prerequisite, vector<string> majors_id);
-    vector<string> getOutput() {return output;}
     void cleanOutput() {output.clear();}
     vector<string> getExtraOutput() {return extra_output;}
     void cleanExtraOutput() {extra_output.clear();}
@@ -29,6 +29,25 @@ public:
     void getExtraInput(vector<bool> result) {closeFormResult = result;}
     void cleanCloseForm();
     void runLogin(string id, string password);
+    void runLogout();
+    void runGetCourseById(string id);
+    void runPersonalPage(string id);
+    void runGetCourse();
+    void runShareCourse(string course_id, string professor_id, string capacity, string time, string exam_date, string class_number);
+
+    void runDeleteCourse(string id);
+    void runPutCourse(string id);
+    bool checkLogin();
+    void runSharePost(string title, string message, string image_address);
+    void runAddProfile(string address);
+    void runGetMyCourse();
+    string getUserProfile() {return user->getProfile();}
+    string getUserName() {return user->getName();}
+    string getUserMajor() {return getMajorById(findMajor(user->getMajorId()))->getName();}
+    string getUserId() {return user->getId();}
+    PeopleType peopleStatus(string id) {return people[findPeopleIndexById(id)]->getPeopleType();}
+    vector<string> getOutput();
+
 protected:
 private:
     void makeMajorString(vector<string> major_string);
@@ -47,7 +66,6 @@ private:
     int course_offer_id;
     int current_course_offer;
 
-    void runGetCourseById(string id);
     void runGetCourseChannel(string id);
     void makeExtraOutput(vector<string> requested_TAs, int index);
     void runCloseTAForm(string id);
@@ -55,30 +73,21 @@ private:
 
     void addNotificationCoursePost(int index, string notification_line);
     void runCoursePost(string id, string title, string message, string image_address);
-    void runAddProfile(string address);
+    
     void runNotification();
-    void runGetMyCourse();
-    void runDeleteCourse(string id);
+    
     bool isStudent();
-    void runPutCourse(string id);
     void runGetPost(string id, string post_id);
-    void runGetCourse();
     bool inCommonTime(string professor_id, string time);
     bool isPresentByProfessor(string professor_id, string course_id);
     int findCourseIndexById(string id);
-    int findPeopleIndexById(string id);
+    
     bool isProfessor(string id);
     bool checkValidCourse(string id);
-    void runSharePost(string title, string message, string image_address);
     void runRemovePost(string id);
-    void runShareCourse(string course_id, string professor_id, string capacity, string time, string exam_date, string class_number);
-    bool checkLogin();
     bool checkValidPassword(string id, string password);
     bool checkValidId(string id);
-    
-    void runLogout();
     void runConnect(string id);
-    void runPersonalPage(string id);
     void showAllCourseOffers();
     void showOneCourseOffers(int index);
     void catchError(runtime_error& ex);

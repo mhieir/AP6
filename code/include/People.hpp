@@ -9,11 +9,6 @@
 #include "CourseOffer.hpp"
 #include "Cloud.hpp"
 
-enum PeopleType {
-    _STUDENT,
-    _PROFESSOR,
-    _UTACCOUNT
-};
 
 class People : public Entity {
 public:
@@ -42,6 +37,7 @@ public:
     int numberOfCourses() {return (int) course_offers.size();}
     void showCourses(vector<string>& output, vector<People*> people);
     string getProfessorName(vector<People*> people, string prof_id);
+    string getProfile() {return profile_image;}
     void showOfferCourses(vector<string>& output);
     void showPosts(vector<string>& output) {cloud->showPosts(output);}
     void shareNotification(string command);

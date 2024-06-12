@@ -6,48 +6,102 @@
 #include "server.hpp"
 #include "University.hpp"
 
-const string SHOW_SERVER_PORT = "Server running on port: ";
-
-class Handle : public RequestHandler{
+class LoginHandler : public RequestHandler {
 public:
-    Handle() {};
-    ~Handle() {};
-    virtual Response* callback(Request* req) {};
-    void run();
-    void setServer(int port) {server = new Server(port);}
-    void setUniversity(char **argv) {university = new University(argv);}
-protected:
-    University* university;
-    Server* server;
+    LoginHandler(University *university);
+    Response* callback(Request*) override;
 private:
-    void mapServerPaths();
+    University* university;
 };
 
-class RandomNumberHandler : public Handle {
+class LogoutHandler : public RequestHandler {
 public:
-    RandomNumberHandler() {};
-    ~RandomNumberHandler() {};
+    LogoutHandler(University *university);
     Response* callback(Request*) override;
+private:
+    University* university;
 };
 
-class LoginHandler : public Handle {
+class PersonalPageHandler : public RequestHandler {
 public:
-    LoginHandler() {};
-    ~LoginHandler() {};
+    PersonalPageHandler(University *university);
     Response* callback(Request*) override;
+private:
+    University* university;
 };
 
-class UploadHandler : public Handle {
+class GetCourseByIdHandler : public RequestHandler {
 public:
-    UploadHandler() {};
-    ~UploadHandler() {};
+    GetCourseByIdHandler(University *university);
     Response* callback(Request*) override;
+private:
+    University* university;
 };
 
-class ColorHandler : public TemplateHandler {
+class GetAllCoursesHandler : public RequestHandler {
 public:
-    ColorHandler(const std::string& filePath);
-    std::map<std::string, std::string> handle(Request* req) override;
+    GetAllCoursesHandler(University *university);
+    Response* callback(Request*) override;
+private:
+    University* university;
 };
+
+class PutCourseHandler : public RequestHandler {
+public:
+    PutCourseHandler(University *university);
+    Response* callback(Request*) override;
+private:
+    University* university;
+};
+
+class DeleteCourseHandler : public RequestHandler {
+public:
+    DeleteCourseHandler(University *university);
+    Response* callback(Request*) override;
+private:
+    University* university;
+};
+
+class SharePostHandler : public RequestHandler {
+public:
+    SharePostHandler(University *university);
+    Response* callback(Request*) override;
+private:
+    University* university;
+};
+
+class ChangeProfileHandler : public RequestHandler {
+public:
+    ChangeProfileHandler(University *university);
+    Response* callback(Request*) override;
+private:
+    University* university;
+};
+
+class MyCoursesHandler : public RequestHandler {
+public:
+    MyCoursesHandler(University *university);
+    Response* callback(Request*) override;
+private:
+    University* university;
+};
+
+class CourseOfferHandler : public RequestHandler {
+public:
+    CourseOfferHandler(University *university);
+    Response* callback(Request*) override;
+private:
+    University* university;
+};
+
+class BackHomeHandler : public RequestHandler {
+public:
+    BackHomeHandler(University *university);
+    Response* callback(Request*) override;
+private:
+    University* university;
+};
+
 
 #endif // HANDLERS_HPP_INCLUDE
+

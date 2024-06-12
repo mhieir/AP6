@@ -17,7 +17,9 @@ People(id, name, major, password, _PROFESSOR) {
 }
 
 void Professor::personalPage(vector<string>& output) {
-    output.push_back(name + SPACE + major->getName() + SPACE + string_position + SPACE);
+    output.push_back(name);
+    output.push_back(major->getName());
+    output.push_back(string_position);
     People ::showOfferCourses(output);
     People ::showPosts(output);
 }

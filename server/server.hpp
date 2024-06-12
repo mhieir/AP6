@@ -21,7 +21,6 @@ class TemplateParser;
 
 class RequestHandler {
 public:
-    RequestHandler() {};
     virtual ~RequestHandler();
     virtual Response* callback(Request* req) = 0;
 };
@@ -71,7 +70,6 @@ public:
     void put(const std::string& path, RequestHandler* handler);
     void del(const std::string& path, RequestHandler* handler);
     void setNotFoundErrPage(const std::string& notFoundErrPage);
-    int getPort() {return port_;}
 
     class Exception : public std::exception {
     public:

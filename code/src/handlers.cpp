@@ -1,74 +1,230 @@
 #include "handlers.hpp"
+#include "DynamicHTML.hpp"
 
-Response* RandomNumberHandler::callback(Request* req) {
-    Response* res = new Response();
-    res->setHeader("Content-Type", "text/html");
+LoginHandler::LoginHandler(University *university): university(university) {}
+LogoutHandler::LogoutHandler(University *university): university(university) {}
+PersonalPageHandler::PersonalPageHandler(University *university): university(university) {}
+GetCourseByIdHandler::GetCourseByIdHandler(University *university): university(university) {}
+GetAllCoursesHandler::GetAllCoursesHandler(University *university): university(university) {}
+PutCourseHandler::PutCourseHandler(University *university): university(university) {}
+DeleteCourseHandler::DeleteCourseHandler(University *university): university(university) {}
+SharePostHandler::SharePostHandler(University *university): university(university) {}
+ChangeProfileHandler::ChangeProfileHandler(University *university): university(university) {}
+MyCoursesHandler::MyCoursesHandler(University *university): university(university) {}
+CourseOfferHandler::CourseOfferHandler(University *university): university(university) {}
+BackHomeHandler::BackHomeHandler(University *university): university(university) {}
 
-    std::string randomNumber = std::to_string(std::rand() % 10 + 1);
-    std::string body;
+Response* catchError(exception& e) {
+    if(e.what() == OK) {
+        Response* res = Response::redirect(OK_PAGE);
+        return res;
+    }
+    else if(e.what() == PERMISSION_DENIED) {
+        Response* res = Response::redirect(PERMISSION_DENIED_PAGE);
+        return res;
+    }
+    else if(e.what() == BAD_REQUEST) {
+        Response* res = Response::redirect(BAD_REQUEST_PAGE);
+        return res;
+    }
+    else if(e.what() == EMPTY) {
+        Response* res = Response::redirect(EMPTY_PAGE);
+        return res;
+    }
+    else {
+        Response* res = Response::redirect(NOT_FOUND_PAGE);
+        return res;
+    }
+}
 
-    body += "<!DOCTYPE html>";
-    body += "<html lang=\"en\">";
-
-    body += "<head>";
-    body += "  <title>Random Number Page</title>";
-    body += "</head>";
-
-    body += "<body style=\"text-align: center;\">";
-    body += "  <h1>AP HTTP</h1>";
-    body += "  <p>A random number in [1, 10] is: " + randomNumber + "</p>";
-    body += "  <p>SessionId: " + req->getSessionId() + "</p>";
-    body += "</body>";
-
-    body += "</html>";
-    res->setBody(body);
-    return res;
+Response* findPeopleType(University* university, string username) {
+    PeopleType people_type = university->peopleStatus(username);
+    if(people_type == _STUDENT) {
+        string body = studentPage(username, university);
+        Response* res = new Response();
+        res->setHeader(HTML_HEADER_FILE_FIRST, HTML_HEADER_FILE_SECOND);
+        res->setBody(body);
+        if(!university->checkLogin()) res->setSessionId(SID);
+        return res;
+    }
+    else if(people_type == _PROFESSOR) {
+        string body = professorPage(username, university);
+        Response* res = new Response();
+        res->setHeader(HTML_HEADER_FILE_FIRST, HTML_HEADER_FILE_SECOND);
+        res->setBody(body);
+        if(!university->checkLogin()) res->setSessionId(SID);
+        return res;
+    }
+    else {
+        string body = adminPage(username, university);
+        Response* res = new Response();
+        res->setHeader(HTML_HEADER_FILE_FIRST, HTML_HEADER_FILE_SECOND);
+        res->setBody(body);
+        if(!university->checkLogin()) res->setSessionId(SID);
+        return res;
+    }
 }
 
 Response* LoginHandler::callback(Request* req) {
-    string username = req->getBodyParam("username");
-    string password = req->getBodyParam("password");
-    university->runLogin(username, password);
-    Response* res = Response::redirect("/rand");
-    res->setSessionId("SID");
-    return res;
+    try {
+        string username = req->getBodyParam(USERNAME);
+        string password = req->getBodyParam(PASSWORD);
+        university->runLogin(username, password);
+        return findPeopleType(university, username);
+    }
+    catch (runtime_error& e) {
+        return catchError(e);
+    }
 }
 
-Response* UploadHandler::callback(Request* req) {
-    std::string name = req->getBodyParam("file_name");
-    std::string file = req->getBodyParam("file");
-    utils::writeToFile(file, name);
-    Response* res = Response::redirect("/");
-    return res;
+Response* LogoutHandler::callback(Request* req) {
+    try {
+        university->runLogout();
+        Response* res = Response::redirect(HOME_PAGE);
+        return res;
+    }
+    catch (runtime_error& e) {
+        return catchError(e);
+    }
 }
 
-ColorHandler::ColorHandler(const std::string& filePath)
-    : TemplateHandler(filePath) {}
-
-std::map<std::string, std::string> ColorHandler::handle(Request* req) {
-    std::string newName = "I am " + req->getQueryParam("name");
-    std::map<std::string, std::string> context;
-    context["name"] = newName;
-    context["color"] = req->getQueryParam("color");
-    return context;
+Response* PersonalPageHandler::callback(Request* req) {
+    try {
+        string username = req->getBodyParam(ID);
+        university->runPersonalPage(username);
+        vector<string> output = university->getOutput();
+        string body = showPersonalPage(university, output, university->peopleStatus(username));
+        Response* res = new Response();
+        res->setHeader(HTML_HEADER_FILE_FIRST, HTML_HEADER_FILE_SECOND);
+        res->setBody(body);
+        return res;
+    }
+    catch (runtime_error& e) {
+        return catchError(e);
+    }
 }
 
-void Handle::mapServerPaths() {
-    server->setNotFoundErrPage("static/404.html");
-    server->get("/", new ShowPage("static/home.html"));
-    server->get("/home.png", new ShowImage("static/home.png"));
-    server->get("/rand", new RandomNumberHandler);
-    server->get("/login", new ShowPage("static/logincss.html"));
-    server->post("/login", new LoginHandler);
-    server->get("/up", new ShowPage("static/upload_form.html"));
-    server->post("/up", new UploadHandler);
-    server->get("/colors", new ColorHandler("template/colors.html"));
-    server->get("/music", new ShowPage("static/music.html"));
-    server->get("/music/moonlight.mp3", new ShowFile("static/moonlight.mp3", "audio/mpeg"));
+Response* GetCourseByIdHandler::callback(Request* req) {
+    try {
+        string id = req->getBodyParam(ID);
+        university->runGetCourseById(id);
+        vector<string> output = university->getOutput();
+        string body = showOneCourse(output);
+        Response* res = new Response();
+        res->setHeader(HTML_HEADER_FILE_FIRST, HTML_HEADER_FILE_SECOND);
+        res->setBody(body);
+        return res;
+    }
+    catch (runtime_error& e) {
+        return catchError(e);
+    }
 }
 
-void Handle::run() {
-    mapServerPaths();
-    cout << SHOW_SERVER_PORT << server->getPort() << endl;
-    server->run();
+Response* GetAllCoursesHandler::callback(Request* req) {
+    try {
+        university->runGetCourse();
+        vector<string> output = university->getOutput();
+        string body = showAllCourse(output);
+        Response* res = new Response();
+        res->setHeader(HTML_HEADER_FILE_FIRST, HTML_HEADER_FILE_SECOND);
+        res->setBody(body);
+        return res;
+    }
+    catch (runtime_error& e) {
+        return catchError(e);
+    }
+}
+
+Response* PutCourseHandler::callback(Request* req) {
+    try {
+        string id = req->getBodyParam(ID);
+        university->runPutCourse(id);
+        Response* res = Response::redirect(OK_PAGE);
+        return res;
+    }
+    catch (runtime_error& e) {
+        return catchError(e);
+    }
+}
+
+Response* DeleteCourseHandler::callback(Request* req) {
+    try {
+        string id = req->getBodyParam(ID);
+        university->runDeleteCourse(id);
+        Response* res = Response::redirect(OK_PAGE);
+        return res;
+    }
+    catch (runtime_error& e) {
+        return catchError(e);
+    }
+}
+
+Response* SharePostHandler::callback(Request* req) {
+    try {
+        string title = req->getBodyParam(TITLE);
+        string message = req->getBodyParam(MESSAGE);
+        string file_name = req->getBodyParam(FILE_NAME);
+        university->runSharePost(title, message, file_name + PNG);
+        Response* res = Response::redirect(HOME_PAGE);
+        return res;
+    }
+    catch (runtime_error& e) {
+        return catchError(e);
+    }
+}
+
+Response* ChangeProfileHandler::callback(Request* req) {
+    try {
+        string file_name = req->getBodyParam(FILE_NAME);
+        string file = req->getBodyParam(FILE_TITLE);
+        utils::writeToFile(file, file_name);
+        university->runAddProfile(file_name + PNG);
+        Response* res = Response::redirect(HOME_PAGE);
+        return res;
+    }
+    catch (runtime_error& e) {
+        return catchError(e);
+    }
+}
+
+Response* MyCoursesHandler::callback(Request* req) {
+    try {
+        university->runGetMyCourse();
+        vector<string> output = university->getOutput();
+        string body = showMyCourse(output);
+        Response* res = new Response();
+        res->setHeader(HTML_HEADER_FILE_FIRST, HTML_HEADER_FILE_SECOND);
+        res->setBody(body);
+        return res;
+    }
+    catch (runtime_error& e) {
+        return catchError(e);
+    }
+}
+
+Response* CourseOfferHandler::callback(Request* req) {
+    try {
+        string course_id = req->getBodyParam(COURSE_ID);
+        string professor_id = req->getBodyParam(PROFESSOR_ID);
+        string capacity = req->getBodyParam(CAPACITY);
+        string time = req->getBodyParam(TIME);
+        string exam_date = req->getBodyParam(EXAM_DATE);
+        string class_number = req->getBodyParam(CLASS_NUMBER);
+        university->runShareCourse(course_id, professor_id, capacity, time, exam_date, class_number);
+        Response* res = Response::redirect(HOME_PAGE);
+        return res;
+    }
+    catch (runtime_error& e) {
+        return catchError(e);
+    }
+}
+
+Response* BackHomeHandler::callback(Request* req) {
+    if(university->checkLogin()) {
+        return findPeopleType(university, university->getUserId());
+    }
+    else {
+        Response* res = Response::redirect(LOGIN_PAGE);
+        return res;
+    }
 }

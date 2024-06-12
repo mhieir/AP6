@@ -2,7 +2,7 @@
 
 People::People(string id, string name, Major* major, string password, PeopleType people_type) :
 Entity(id, name), major(major), password(password), people_type(people_type) {
-    profile_image = NULL_STRING;
+    profile_image = "home.png";
     cloud = new Cloud();
 }
 
@@ -45,13 +45,16 @@ void People::removeCourse(int course_offer_id) {
 }
 
 void People::showOfferCourses(vector<string>& output) {
+    string answer = "";
     for(int i = 0; i + 1 < course_offers.size(); i++) {
-        output.push_back( course_offers[i]->getName() + COMMA);
+        answer += course_offers[i]->getName() + COMMA;
+       // output.push_back( course_offers[i]->getName() + COMMA);
     }
     if(!course_offers.empty()) {
-        output.push_back(course_offers.back()->getName());
+        answer += course_offers.back()->getName();
+       // output.push_back(course_offers.back()->getName());
     }
-    output.push_back(END_LINE);
+    output.push_back(answer);
 }
 
 
@@ -74,11 +77,13 @@ string People::getProfessorName(vector<People*> people, string prof_id) {
 
 void People::showCourses(vector<string>& output, vector<People*> people){
     for(int i = 0; i < course_offers.size(); i++) {
-        output.push_back(to_string(course_offers[i]->getCourseOfferId()) + SPACE + course_offers[i]->getName() + SPACE);
-        output.push_back(to_string(course_offers[i]->getCapacity()) + SPACE);
-        output.push_back(getProfessorName(people, course_offers[i]->getProfessorId()) + SPACE);
-        output.push_back(course_offers[i]->getTime() + SPACE + course_offers[i]->getExamTime() + SPACE);
-        output.push_back(to_string(course_offers[i]->getClassNumber()) + END_LINE);
+        output.push_back(to_string(course_offers[i]->getCourseOfferId()));
+        output.push_back(course_offers[i]->getName());
+        output.push_back(to_string(course_offers[i]->getCapacity()));
+        output.push_back(getProfessorName(people, course_offers[i]->getProfessorId()));
+        output.push_back(course_offers[i]->getTime());
+        output.push_back(course_offers[i]->getExamTime());
+        output.push_back(to_string(course_offers[i]->getClassNumber()));
     }
 }
 

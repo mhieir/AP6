@@ -77,6 +77,12 @@ University::University(char **argv) {
     makeDefaultConnections();
 }
 
+vector<string> University::getOutput(){
+    vector<string> copy_output = output;
+    cleanOutput();
+    return copy_output;
+}
+
 void University::catchError(runtime_error& ex) {
     output.push_back(string(ex.what()) + END_LINE);
 }
@@ -109,8 +115,6 @@ bool University::checkLogin() {
 }
 
 bool University::checkValidId(string id) {
-    cout << "\n\n\n\n\n";
-    cout << people.size() << endl << "\n\n\n\n\n";
     for(int i = 0; i < people.size(); i++) {
         if(people[i]->getId() == id) {
             return true;
@@ -201,10 +205,10 @@ void University::addNotificationCoursePost(int index, string notification_line) 
 
 void University::showAllCourseOffers() {
     for(int i = 0; i < all_course_offers.size(); i++) {
-        output.push_back(to_string(all_course_offers[i]->getCourseOfferId()) + SPACE);
-        output.push_back(all_course_offers[i]->getName()  + SPACE);
-        output.push_back(to_string(all_course_offers[i]->getCapacity()) + SPACE);
-        output.push_back(people[findPeopleIndexById(all_course_offers[i]->getProfessorId())]->getName() + END_LINE);
+        output.push_back(to_string(all_course_offers[i]->getCourseOfferId()));
+        output.push_back(all_course_offers[i]->getName());
+        output.push_back(to_string(all_course_offers[i]->getCapacity()));
+        output.push_back(people[findPeopleIndexById(all_course_offers[i]->getProfessorId())]->getName());
     }
 }
 
@@ -563,7 +567,6 @@ void University::runSharePost(string title, string message, string image_address
         if(image_address == DEFINE_STRING) image_address = NULL_STRING;
         user->addPost(title, message, image_address, NULL_STRING, _NORMAL, NULL_STRING, 0);
         user->shareNotification(user->getId() + SPACE + user->getName() + COLON + SPACE + NEW_POST + END_LINE);
-        throw runtime_error(OK);
     }
 }
 
@@ -658,6 +661,7 @@ void University::runPersonalPage(string id) {
         throw runtime_error(BAD_REQUEST);
     }
     else if(!checkValidId(id)) {
+        exit(0);
         throw runtime_error(NOT_FOUND);
     }
     else {
@@ -682,31 +686,25 @@ void University::runNotification(){
 
 void University::runLogout() {
     if(!checkLogin()) {
+        cout << "\n\n\n\n\n\n\n\n\n";
         throw runtime_error(PERMISSION_DENIED);
     }
     else {
         user = nullptr;
-        throw runtime_error(OK);
     }
 }
 
 void University::runLogin(string id, string password) {
-
-    // if(user != nullptr) {
-    //     cout << "-------------------\n\n\n\n\n\n\n";
-    //     throw runtime_error(PERMISSION_DENIED);
-    // }
-    // else 
-    if(!checkValidId(id)) {
-        exit(0);
+    if(user != nullptr) {
+        throw runtime_error(PERMISSION_DENIED);
     }
-    //     throw runtime_error(NOT_FOUND);
-    // }
-    // else if(!checkValidPassword(id, password)) {
-    //     throw runtime_error(PERMISSION_DENIED);
-    // }
-    // else {
-    //     user = people[findPeopleIndexById(id)];
-    //     throw runtime_error(OK);
-    // }
+    else if(!checkValidId(id)) {
+        throw runtime_error(NOT_FOUND);
+    }
+    else if(!checkValidPassword(id, password)) {
+        throw runtime_error(PERMISSION_DENIED);
+    }
+    else {
+        user = people[findPeopleIndexById(id)];
+    }
 }

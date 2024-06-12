@@ -1,7 +1,7 @@
 CXX = g++
-CXXFLAGS = -std=c++11 -Wall -fsanitize=address -fsanitize=undefined -pedantic
+CXXFLAGS = -std=c++20 -Wall -fsanitize=address -fsanitize=undefined -pedantic
 BUILD_DIR = build
-OUT_EXE = myserver.out
+OUT_EXE = utms.out
 
 ifeq ($(OS),Windows_NT)
 	LDLIBS += -l Ws2_32

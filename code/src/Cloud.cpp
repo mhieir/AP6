@@ -70,7 +70,9 @@ void Cloud::showOnePostCourseChannel(vector<string>& output, int post_id) {
 
 void Cloud::showPosts(vector<string>& output) {
     for(int i = (int) posts.size() - 1; 0 <= i; i--) {
-        output.push_back(to_string(posts[i]->getId()) + SPACE + posts[i]->getTitle() + END_LINE);
+        // output.push_back(to_string(posts[i]->getId())+ SPACE + posts[i]->getTitle() + END_LINE);
+        output.push_back(to_string(posts[i]->getId()));
+        output.push_back(posts[i]->getTitle());
     }
 }
 
