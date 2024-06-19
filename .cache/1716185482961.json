@@ -1,1 +1,0 @@
-{"date":"2024-05-20T06:11:21.103Z","courseId":"17","assignment":"AP-Spring03-CA6","trace":{"version":84,"content":"#include \"Global.hpp\"\n\nclass University {\npublic:\n    University();\n    ~University() {};\nprotected:\nprivate:\n}","filename":"/Users/mahdis/Desktop/AP/AP6/include/University.hpp","identifier":"Text Change","lineCount":9,"languageId":"cpp"},"failed":false}

@@ -256,7 +256,6 @@ void University::runAddProfile(string address) {
     }
     else {
         user->addProfile(address);
-        throw runtime_error(OK);
     }
 }
 

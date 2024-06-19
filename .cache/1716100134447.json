@@ -1,1 +1,0 @@
-{"date":"2024-05-19T06:28:52.974Z","courseId":"17","assignment":"AP-Spring03-CA6","trace":{"content":"#include \"Major.hpp\"\n\nMajor::Major() : name(name), mid(mid) {}","filename":"/Users/mahdis/Desktop/AP/AP6/src/Major.cpp","identifier":"Save Document","languageId":"cpp","version":145,"lineCount":3},"failed":false}

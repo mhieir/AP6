@@ -1,1 +1,0 @@
-{"date":"2024-05-19T06:16:12.867Z","courseId":"17","assignment":"AP-Spring03-CA6","trace":{"content":"#include \"Major.hpp\"\n\nMajor :: Major(string mid, stirng name) : name(name), mid(mid) {}","filename":"/Users/mahdis/Desktop/AP/AP6/src/Major.cpp","identifier":"Save Document","languageId":"cpp","version":134,"lineCount":3},"failed":true}

@@ -1,1 +1,0 @@
-{"date":"2024-05-21T12:20:54.638Z","courseId":"17","assignment":"AP-Spring03-CA6","trace":{"content":"#include \"Entity.hpp\"\n\nEntity::Entity(string id, string name) : id(id), name(name) {}","filename":"/Users/mahdis/Desktop/AP/AP6/src/Entity.cpp","identifier":"Save Document","languageId":"cpp","version":1,"lineCount":3},"failed":false}

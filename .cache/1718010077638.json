@@ -1,1 +1,0 @@
-{"date":"2024-06-10T09:01:14.185Z","courseId":"17","assignment":"AP-Spring03-CA6-phase3","trace":{"version":19,"content":"#include \"Global.hpp\"\n\nstring studentPage(University* university);","filename":"/Users/mahdis/Desktop/AP/AP6/code/src/DynamicHTML.cpp","identifier":"Text Change","lineCount":3,"languageId":"cpp"},"failed":false}

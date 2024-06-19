@@ -72,10 +72,11 @@ private:
 
 class ChangeProfileHandler : public RequestHandler {
 public:
-    ChangeProfileHandler(University *university);
+    ChangeProfileHandler(University *university, Server* server);
     Response* callback(Request*) override;
 private:
     University* university;
+    Server* server;
 };
 
 class MyCoursesHandler : public RequestHandler {

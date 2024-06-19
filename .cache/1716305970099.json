@@ -1,1 +1,0 @@
-{"date":"2024-05-21T15:39:29.017Z","courseId":"17","assignment":"AP-Spring03-CA6","trace":{"content":"#include \"Post.hpp\"\n\nPost::Post(string title, string message) : message(message), title(title) {}","filename":"/Users/mahdis/Desktop/AP/AP6/src/Post.cpp","identifier":"Save Document","languageId":"cpp","version":97,"lineCount":3},"failed":false}

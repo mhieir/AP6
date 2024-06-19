@@ -9,7 +9,7 @@ GetAllCoursesHandler::GetAllCoursesHandler(University *university): university(u
 PutCourseHandler::PutCourseHandler(University *university): university(university) {}
 DeleteCourseHandler::DeleteCourseHandler(University *university): university(university) {}
 SharePostHandler::SharePostHandler(University *university): university(university) {}
-ChangeProfileHandler::ChangeProfileHandler(University *university): university(university) {}
+ChangeProfileHandler::ChangeProfileHandler(University *university, Server* server): server(server), university(university) {}
 MyCoursesHandler::MyCoursesHandler(University *university): university(university) {}
 CourseOfferHandler::CourseOfferHandler(University *university): university(university) {}
 BackHomeHandler::BackHomeHandler(University *university): university(university) {}
@@ -175,10 +175,11 @@ Response* SharePostHandler::callback(Request* req) {
 
 Response* ChangeProfileHandler::callback(Request* req) {
     try {
-        string file_name = req->getBodyParam(FILE_NAME);
+        string file_name = req->getBodyParam(FILE_NAME) + PNG;
         string file = req->getBodyParam(FILE_TITLE);
-        utils::writeToFile(file, file_name);
-        university->runAddProfile(file_name + PNG);
+        utils::writeToFile(file, "./static/" + file_name);
+        server->get("/" + file_name, new ShowImage("static/" + file_name));
+        university->runAddProfile(file_name);
         Response* res = Response::redirect(HOME_PAGE);
         return res;
     }

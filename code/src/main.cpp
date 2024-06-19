@@ -23,7 +23,7 @@ void mapServerPaths(Server* server, University* university) {
     server->get(SHARE_POST_PAGE, new ShowPage(STATIC_SHARE_POST));
     server->post(SHARE_POST_PAGE, new SharePostHandler(university));
     server->get(CHANGE_PROFILE_PAGE, new ShowPage(STATIC_CHANGE_PROFILE));
-    server->post(CHANGE_PROFILE_PAGE, new ChangeProfileHandler(university));
+    server->post(CHANGE_PROFILE_PAGE, new ChangeProfileHandler(university, server));
     server->post(MY_COURSE_PAGE, new MyCoursesHandler(university));
     server->post(COURSE_OFFER_PAGE, new CourseOfferHandler(university));
     server->get(OK_PAGE, new ShowPage(STATIC_OK));

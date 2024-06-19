@@ -1,1 +1,0 @@
-{"date":"2024-05-22T09:12:13.125Z","courseId":"17","assignment":"AP-Spring03-CA6","trace":{"content":"#include \"University.hpp\"\n#include \"Primary.hpp\"\n\nvoid University::runPersonalPage() {\n    \n}","filename":"/Users/mahdis/Desktop/AP/AP6/src/PersonalPage.cpp","identifier":"Save Document","languageId":"cpp","version":31,"lineCount":6},"failed":false}
